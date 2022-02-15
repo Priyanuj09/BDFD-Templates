@@ -20,6 +20,7 @@ $var[A;$toLowercase[$splitText[1]]]
 $var[B;$toLowercase[$splitText[2]]]
 $var[X;0] $var[Y;0]
 
+$onlyIf[$checkContains[$toLowercase[$message];s;m]==true;Supports seeking format (eg. ` 1m 50s `, ` 10m `, ` 42s `)]
 $if[$checkContains[$var[A];s]]
     $var[N;$replaceText[$var[A];s;]]
     $onlyIf[$isNumber[$var[N]]==true;Input a valid Second]
