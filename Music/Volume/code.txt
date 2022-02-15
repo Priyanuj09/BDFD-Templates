@@ -1,31 +1,22 @@
-$c[Basic Functions]
 $nomention
 $ignoreTriggerCase
-$onlyIf[$guildID!=;]
 $alternativeParsing
 $argsCheck[1;]
 
-$c[Return error message if you don't have the variables]
 $varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
 
+$onlyIf[$guildID!=;]
 $onlyIf[$and[$isNumber[$message]==true;$message<201;$message>=0]==true;Type a valid number between 0-200]
 
-$async[a]
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]  $c[Gets bot's voice channel ID]
+$httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
 $var[BotVC;$httpResult[voice_id]]
-$endasync
-$await[a]
+$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
+$onlyIf[$optOff[$httpResult[voice_id]]!=;You are not connected to any voice channel]
+$onlyIf[$optOff[$httpResult[voice_id]]==$var[BotVC];You need to be in the same voice channel]
+$httpPost[$getVar[Music]/volume/$guildID;{"volume":$message}]
 
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]  $c[Gets author's voice channel ID]
-
-$onlyIf[$httpResult[voice_id]!=;You are not connected to any voice channel]  $c[Checks if author is present in the voice channel]
-$onlyIf[$httpResult[voice_id]==$var[BotVC];You need to be in the same voice channel]  $c[Check if author's and bot's vc channel is same or not]
-
-$httpPost[$getVar[Music]/volume/$guildID;{"volume":$message}]  $c[A request to api for volume change]
-
-$c[Reacts the author's message with respective emoji saying whether it was success or not]
 $if[$httpResult[type]==SUCCESS]
-$addCmdReactions[✅]
-$else
-$addCmdReactions[❎]
-$endif
+  $addCmdReactions[✅]
+    $else
+      $addCmdReactions[❎]
+        $endif
