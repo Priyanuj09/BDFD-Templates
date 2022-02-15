@@ -1,6 +1,8 @@
 # Information
 Script Language - ` BDScript 2 `
 
+API Used - https://some-random-api.ml/
+
 # Screenshots
 - Lyrics
 
