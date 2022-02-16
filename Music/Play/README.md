@@ -8,8 +8,8 @@ Variables needed
 
 Code Scripting Language is BDScript 2
 
-# Info
-Errors might pop, so, use as a test...its not ready, i will fix it soon
+# Note
+- It works on some users only
 
 # Screenshots
 #1 - Playing Track
