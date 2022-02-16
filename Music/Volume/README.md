@@ -10,6 +10,9 @@
 ## Scipting Language
 - ` BDScript 2 `
 
+# Info
+- Any Errors? Ping me in [Discord Server](https://discord.gg/JcENFCf)
+
 # Screenshots
 #1 - Volume Success
 
