@@ -6,10 +6,9 @@ Variables needed
 
 - Track (Value : 0)
 
-Code Scripting Language is BDScript 2
-
 # Note
 - It works on some users only
+- Script Language - ` BDScript 2 `
 
 # Screenshots
 #1 - Playing Track
