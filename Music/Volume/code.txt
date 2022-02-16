@@ -10,13 +10,14 @@ $onlyIf[$and[$isNumber[$message]==true;$message<201;$message>=0]==true;Type a va
 
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
 $var[BotVC;$httpResult[voice_id]]
+$onlyIf[$var[BotVC]!=;Currently i am not in any voice channels]
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
 $onlyIf[$optOff[$httpResult[voice_id]]!=;You are not connected to any voice channel]
 $onlyIf[$optOff[$httpResult[voice_id]]==$var[BotVC];You need to be in the same voice channel]
 $httpPost[$getVar[Music]/volume/$guildID;{"volume":$message}]
 
 $if[$httpResult[type]==SUCCESS]
-  $addCmdReactions[✅]
+  $sendMessage[Successfully changed the track volume!]
     $else
-      $addCmdReactions[❎]
+      $sendMessage[Failed to change volume!]
         $endif
