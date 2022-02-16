@@ -1,16 +1,19 @@
 # Important
 
-Variables needed
+## Variables
 
-- Music (Value : Your Replit lavalink)
+- ` Music ` - Your Lavalink
 
+## Permission
+- ` Send Message `
 
-Code Scripting Language is BDScript 2
+## Scipting Language
+- ` BDScript 2 `
 
 # Screenshots
 #1 - Volume Success
 
-![Image](https://i.postimg.cc/P5YN1DRp/Screenshot-20220214-114130.png)
+[![Screenshot-20220216-155602.png](https://i.postimg.cc/R0qM8th2/Screenshot-20220216-155602.png)](https://postimg.cc/GBwwTHkj)
 
 #2 - Volume Exceed Error Message
 
@@ -20,4 +23,4 @@ Code Scripting Language is BDScript 2
 
 ![Image 3](https://i.postimg.cc/050TKynk/Screenshot-20220214-114549.png)
 ![Image 4](https://i.postimg.cc/sDFJzY71/Screenshot-20220214-114644.png)
-
+[![Screenshot-20220216-155643.png](https://i.postimg.cc/fknbxRvk/Screenshot-20220216-155643.png)](https://postimg.cc/V0g1w1pc)
