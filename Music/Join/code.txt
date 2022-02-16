@@ -1,0 +1,22 @@
+$nomention
+$ignoreTriggerCase
+$alternativeParsing
+
+$onlyIf[$guildID!=;]
+$onlyIf[$message==;]
+
+$onlyBotPerms[connect;:x: Missing `connect` permission]
+
+$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
+
+$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
+$var[A;$httpResult[voice_id]]
+$onlyIf[$var[A]!=;You are not connected to any voice channel]
+
+$httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
+$onlyIf[$var[A]!=$optOff[$httpResult[voice_id]];Bruh...didn't you noticed me in VC?]
+
+$httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[A]"}]
+$onlyIf[$httpResult[type]==SUCCESS;Failed to join into your voice channel]
+
+$sendMessage[_Hops into <#$var[A]>!_]
