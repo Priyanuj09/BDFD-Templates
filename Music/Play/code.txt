@@ -1,7 +1,5 @@
 $nomention
-$ignoreTriggerCase
-$reply
-$allowUserMentions[]
+
 $onlyIf[$guildID!=;]
 $alternativeParsing
 $argsCheck[>1;Type a song to play]
@@ -9,42 +7,71 @@ $argsCheck[>1;Type a song to play]
 $onlyBotPerms[connect;:x: Missing `connect` permission]
 $onlyBotPerms[speak;:x: Missing `speak` permission]
 
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
+$varExistError[Music;Create a variable in the app named ` Music ` and put your Replit link as value]
 $varExistError[Track;Create a variable in the app named ` Track ` and put 0 as value]
-
-$cooldown[2s;Slow up buddy!]
 
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
 $onlyIf[$httpResult[voice_id]!=;You are not connected to any voice channel]
 $httpPost[$getVar[Music]/join_voice_channel;{"id":"$httpResult[voice_id]"}]
-$httpPost[$getVar[Music]/search_and_play/$guildID?q=$url[encode;$message]]
-$var[a;$httpResult[playing_now]]
-$var[b;$httpResult[title]]
 
-$if[$var[a]]
-$botTyping
+$httpPost[$getVar[Music]/search_and_play/$guildID?q=$url[encode;$message];{}]
+$replyIn[3s]
+$onlyIf[$httpResult[type]==SUCCESS;An error has occurred!]
+
+$if[$httpResult[playing_now]==true]
 $httpGet[$getVar[Music]/track_info/$guildID]
+
+$author[Playing Now!]
+$title[$httpResult[title]]
+$embeddedURL[$httpResult[url]]
+$addField[Author;$httpResult[author];yes]
 $textSplit[$httpResult[duration];.]
-$enableDecimals[no]
+
 $var[Secs;$divide[$splitText[1];1000]]
 $var[Mins;$divide[$var[Secs];60]]
 $var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
-$if[$var[Sec]<10] $var[S;$var[Sec] Second] $else $var[S;$var[Sec] Seconds] $endif
-$if[$var[Mins]<10] $var[M;$var[Mins] Minute] $else $var[M;$var[Mins] Minutes] $endif
-$author[Playing now!]
-$title[$httpResult[title]]
-$embeddedURL[$httpResult[url]]
-$addField[Author;╰ ` $httpResult[author] `;yes]
-$addField[Duration;╰ ` $var[M] $var[S] `;yes]
+
+$if[$var[Sec]<10]
+  $var[S;$var[Sec] Second]
+    $else $var[S;$var[Sec] Seconds]
+      $endif
+$if[$var[Mins]<10]
+  $var[M;$var[Mins] Minute]
+    $else $var[M;$var[Mins] Minutes]
+      $endif
+
+$addField[Duration;$var[M] $var[S];yes]
 $image[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
 $color[a86df8]
 $footer[#$channelName[$channelID] | $username#$discriminator[]]
 $footerIcon[$authorAvatar]
+$setServerVar[Track;1]
 
-$elseif[$var[a]==false]
-$author[Added to Queue!]
-$title[$var[b]]
+$elseif[$httpResult[playing_now]==false]
+$httpGet[$getVar[Music]/track_info/$guildID?offset=$sum[$getServerVar[Track];1]]
+$author[Added to Queue! - #$getServerVar[Track]]
+$title[$httpResult[title]]
+$embeddedURL[$httpResult[url]]
+$addField[Author;$httpResult[author];yes]
+$textSplit[$httpResult[duration];.]
+
+$var[Secs;$divide[$splitText[1];1000]]
+$var[Mins;$divide[$var[Secs];60]]
+$var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
+
+$if[$var[Sec]<10]
+  $var[S;$var[Sec] Second]
+    $else $var[S;$var[Sec] Seconds]
+      $endif
+$if[$var[Mins]<10]
+  $var[M;$var[Mins] Minute]
+    $else $var[M;$var[Mins] Minutes]
+      $endif
+
+$addField[Duration;$var[M] $var[S];yes]
+$image[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
 $color[a86df8]
 $footer[#$channelName[$channelID] | $username#$discriminator[]]
 $footerIcon[$authorAvatar]
+$setServerVar[Track;$sum[$getServerVar[Track];1]]
 $endif
