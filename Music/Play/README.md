@@ -1,14 +1,21 @@
 # Important
 
-Variables needed
+## Variables
 
-- Music (Value : Your Replit lavalink)
+- ` Music ` - Your Lavalink
+- ` Track ` - 0
 
-- Track (Value : 0)
+## Permission
+- ` Send Message `
+- ` Connect `
+- ` Speak `
+
+## Scripting Language
+- ` BDScript 2 `
 
 # Note
-- It works on some users only
-- Script Language - ` BDScript 2 `
+- Experimental code...It works on some users only
+- Any Errors? Send the error message in my DMs and i will check it...
 
 # Screenshots
 #1 - Playing Track
