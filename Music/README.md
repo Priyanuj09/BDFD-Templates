@@ -17,7 +17,7 @@ $botNode
 
 and trigger the command in discord and your bot will return a number. And that's, your bot node.
 
-3. How can i use the music commands if my node is not present here?
+2. How can i use the music commands if my bot node is not present here?
 
 Ans. Follow this steps :
 - Regenerate your bot's token in Discord Developer Portal
