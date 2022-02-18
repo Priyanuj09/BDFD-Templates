@@ -1,12 +1,19 @@
 $nomention
 $ignoreTriggerCase
 $alternativeParsing
-$argsCheck[1;]
 
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
+$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink there.]
+
+$if[$isSlash==false]
+  $argsCheck[1;]
+    $var[A;$message]
+      $else
+        $var[A;$message[SLASH_OPTION_NAME]] $c[Check README.md for guide]
+          $endif
 
 $onlyIf[$guildID!=;]
-$onlyIf[$and[$isNumber[$message]==true;$message<201;$message>=0]==true;Type a valid number between 0-200]
+
+$onlyIf[$and[$isNumber[$var[A]]==true;$var[A]<201;$var[A]>=0]==true;Type a valid number between 0-200]
 
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
 $var[BotVC;$httpResult[voice_id]]
@@ -14,10 +21,10 @@ $onlyIf[$var[BotVC]!=;Currently i am not in any voice channels]
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
 $onlyIf[$optOff[$httpResult[voice_id]]!=;You are not connected to any voice channel]
 $onlyIf[$optOff[$httpResult[voice_id]]==$var[BotVC];You need to be in the same voice channel]
-$httpPost[$getVar[Music]/volume/$guildID;{"volume":$message}]
+$httpPost[$getVar[Music]/volume/$guildID;{"volume":$var[A]}]
 
 $if[$httpResult[type]==SUCCESS]
-  $sendMessage[Successfully changed the track volume!]
+  Successfully changed the track volume!
     $else
-      $sendMessage[Failed to change volume!]
+      Failed to change volume!
         $endif
