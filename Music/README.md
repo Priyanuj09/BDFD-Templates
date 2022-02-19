@@ -4,7 +4,7 @@ There is any issue in BDFD that ` $httpResult[] ` isn't working with multiple re
 ![Screenshot_20220217_192839](https://user-images.githubusercontent.com/95774950/154497385-1f4bfb38-a782-46ca-b91a-55a5dd70065b.png)
 
 but the update isn't available on some nodes. So, my music commands will only work on bots if they are having one of these node numbers. As for them, they have the latest version
-- 2, 12, 13, 21, 22
+- 2, 12, 21, 22
 
 ## FAQs
 1. How do i check my Bot Node?
@@ -24,7 +24,7 @@ Ans. Follow this steps :
 - Copy the new token and paste it in the app
 - Run your node command and check if the node number is one of those which i gave. If you didn't got, regenerate the token until you get the desired one and if you got any one of those, you can skip to the next point.
 - Now, Go to your Music replit page and open the Replit Editor
-- Then, head off to Commands > Secrets > Upadate your previous token with the new one.
+- Then, head off to Commands > Secrets > Update your previous token with the new one.
 - Finally, run the replit and you are good to go now.
 
 # Note
