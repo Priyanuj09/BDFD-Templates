@@ -20,7 +20,7 @@ $async[Join]
     $endasync $await[Join]
 
 $if[$isSlash]
-  $var[Search;$message[search]]
+  $var[Search;$message[SLASH_OPTION_NAME]] $c[Put Slash Option type as STRING]
     $else
       $var[Search;$message]
         $argsCheck[>1;Type a song to play]
