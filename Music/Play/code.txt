@@ -1,77 +1,70 @@
 $nomention
 
-$onlyIf[$guildID!=;]
 $alternativeParsing
-$argsCheck[>1;Type a song to play]
+$onlyIf[$guildID!=;]
 
 $onlyBotPerms[connect;:x: Missing `connect` permission]
 $onlyBotPerms[speak;:x: Missing `speak` permission]
 
-$varExistError[Music;Create a variable in the app named ` Music ` and put your Replit link as value]
-$varExistError[Track;Create a variable in the app named ` Track ` and put 0 as value]
+$varExistError[Music;Create the variable named ` Music ` and put your lavalink there as value]
 
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
-$onlyIf[$httpResult[voice_id]!=;You are not connected to any voice channel]
-$httpPost[$getVar[Music]/join_voice_channel;{"id":"$httpResult[voice_id]"}]
+$async[AuthorVID]
+  $httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
+    $var[AuthorID;$httpResult[voice_id]]
+      $endasync $await[AuthorVID]
 
-$httpPost[$getVar[Music]/search_and_play/$guildID?q=$url[encode;$message];{}]
-$replyIn[3s]
-$onlyIf[$httpResult[type]==SUCCESS;An error has occurred!]
+$onlyIf[$var[AuthorID]!=;You are not connected to any voice channel]
 
-$if[$httpResult[playing_now]==true]
-$httpGet[$getVar[Music]/track_info/$guildID]
+$async[Join]
+  $httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorID]"}]
+    $endasync $await[Join]
 
-$author[Playing Now!]
-$title[$httpResult[title]]
-$embeddedURL[$httpResult[url]]
-$addField[Author;$httpResult[author];yes]
-$textSplit[$httpResult[duration];.]
+$if[$isSlash]
+  $var[Search;$message[search]]
+    $else
+      $var[Search;$message]
+        $argsCheck[>1;Type a song to play]
+          $endif
 
-$var[Secs;$divide[$splitText[1];1000]]
-$var[Mins;$divide[$var[Secs];60]]
-$var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
+$async[Play]
+  $httpPost[$getVar[Music]/search_and_play/$guildID?q=$url[encode;$var[Search]];{}]
+    $var[pNow;$httpResult[playing_now]]
+    $var[track;$httpResult[title]]
+    $endasync $await[Play]
 
-$if[$var[Sec]<10]
-  $var[S;$var[Sec] Second]
-    $else $var[S;$var[Sec] Seconds]
-      $endif
-$if[$var[Mins]<10]
-  $var[M;$var[Mins] Minute]
-    $else $var[M;$var[Mins] Minutes]
-      $endif
 
-$addField[Duration;$var[M] $var[S];yes]
-$image[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
-$color[a86df8]
-$footer[#$channelName[$channelID] | $username#$discriminator[]]
+$if[$var[pNow]==true]
+    $httpGet[$getVar[Music]/track_info/$guildID]
+    $textSplit[$httpResult[duration];.]
+    $enableDecimals[no]
+    $var[Secs;$divide[$splitText[1];1000]]
+    $var[Mins;$divide[$var[Secs];60]]
+    $var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
+    
+    $if[$var[Sec]<10]
+        $var[S;$var[Sec] Second]
+    $else
+        $var[S;$var[Sec] Seconds]
+    $endif
+    
+    $if[$var[Mins]<10]
+        $var[M;$var[Mins] Minute]
+    $else
+         $var[M;$var[Mins] Minutes]
+    $endif
+    $author[Playing Now!]
+    $title[$httpResult[title]]
+    $embeddedURL[$httpResult[url]]
+    $description[**By** : ` $httpResult[author] `
+**Duration** : ` $var[M] $var[S] `
+**In** : <#$var[AuthorID]>]
+    $thumbnail[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
+    $else
+         $httpGet[$getVar[Music]/track_info/$guildID?offset=]
+         $author[Added to Queue!]
+         $title[$var[track]]
+    $endif
+
+$color[2f3136]
+$footer[Requested by $username#$discriminator[]]
 $footerIcon[$authorAvatar]
-$setServerVar[Track;1]
-
-$elseif[$httpResult[playing_now]==false]
-$httpGet[$getVar[Music]/track_info/$guildID?offset=$sum[$getServerVar[Track];1]]
-$author[Added to Queue! - #$getServerVar[Track]]
-$title[$httpResult[title]]
-$embeddedURL[$httpResult[url]]
-$addField[Author;$httpResult[author];yes]
-$textSplit[$httpResult[duration];.]
-
-$var[Secs;$divide[$splitText[1];1000]]
-$var[Mins;$divide[$var[Secs];60]]
-$var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
-
-$if[$var[Sec]<10]
-  $var[S;$var[Sec] Second]
-    $else $var[S;$var[Sec] Seconds]
-      $endif
-$if[$var[Mins]<10]
-  $var[M;$var[Mins] Minute]
-    $else $var[M;$var[Mins] Minutes]
-      $endif
-
-$addField[Duration;$var[M] $var[S];yes]
-$image[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
-$color[a86df8]
-$footer[#$channelName[$channelID] | $username#$discriminator[]]
-$footerIcon[$authorAvatar]
-$setServerVar[Track;$sum[$getServerVar[Track];1]]
-$endif
