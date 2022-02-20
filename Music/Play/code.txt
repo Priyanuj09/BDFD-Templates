@@ -6,65 +6,64 @@ $onlyIf[$guildID!=;]
 $onlyBotPerms[connect;:x: Missing `connect` permission]
 $onlyBotPerms[speak;:x: Missing `speak` permission]
 
-$varExistError[Music;Create the variable named ` Music ` and put your lavalink there as value]
+$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
 
-$async[AuthorVID]
-  $httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
-    $var[AuthorID;$httpResult[voice_id]]
-      $endasync $await[AuthorVID]
+$var[AuthorID;$httpResult[voice_id]]
 
 $onlyIf[$var[AuthorID]!=;You are not connected to any voice channel]
 
-$async[Join]
-  $httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorID]"}]
-    $endasync $await[Join]
+$httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorID]"}]
 
-$if[$isSlash]
-  $var[Search;$message[SLASH_OPTION_NAME]] $c[Put Slash Option type as STRING]
+$if[$checkContains[$message[1];https://]==true]
+    $if[$isSlash==false]
+        $argsCheck[>1;Type something to play]
+        $var[Search;$message]
     $else
-      $var[Search;$message]
-        $argsCheck[>1;Type a song to play]
-          $endif
+         $var[Search;$message[OPTION_NAME]]
+    $endif
+$else
+     $if[$isSlash==false]
+         $argsCheck[>1;Type something to play]
+         $var[Search;$url[encode;$message]]
+     $else
+          $var[Search;$url[encode;$message[OPTION_NAME]]]
+     $endif
+$endif
 
-$async[Play]
-  $httpPost[$getVar[Music]/search_and_play/$guildID?q=$url[encode;$var[Search]];{}]
-    $var[pNow;$httpResult[playing_now]]
-    $var[track;$httpResult[title]]
-    $endasync $await[Play]
-
-
-$if[$var[pNow]==true]
-    $httpGet[$getVar[Music]/track_info/$guildID]
-    $textSplit[$httpResult[duration];.]
-    $enableDecimals[no]
-    $var[Secs;$divide[$splitText[1];1000]]
-    $var[Mins;$divide[$var[Secs];60]]
-    $var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
+$httpGet[$getVar[Music]/search?q=$var[Search]]
+$textSplit[$httpResult[tracks;0;duration];.]
+$enableDecimals[no]
     
-    $if[$var[Sec]<10]
-        $var[S;$var[Sec] Second]
-    $else
-        $var[S;$var[Sec] Seconds]
-    $endif
+$var[Secs;$divide[$splitText[1];1000]]
+$var[Mins;$divide[$var[Secs];60]]
+$var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
     
-    $if[$var[Mins]<10]
-        $var[M;$var[Mins] Minute]
-    $else
-         $var[M;$var[Mins] Minutes]
-    $endif
-    $author[Playing Now!]
-    $title[$httpResult[title]]
-    $embeddedURL[$httpResult[url]]
-    $description[**By** : ` $httpResult[author] `
-**Duration** : ` $var[M] $var[S] `
-**In** : <#$var[AuthorID]>]
-    $thumbnail[$replaceText[$httpResult[thumbnail];2048.jpg;maxresdefault.jpg]]
-    $else
-         $httpGet[$getVar[Music]/track_info/$guildID?offset=]
-         $author[Added to Queue!]
-         $title[$var[track]]
-    $endif
+$if[$var[Sec]<10]
+    $var[S;$var[Sec] Second]
+$else
+     $var[S;$var[Sec] Seconds]
+$endif
 
-$color[2f3136]
+$if[$var[Mins]<10]
+    $var[M;$var[Mins] Minute]
+$else
+     $var[M;$var[Mins] Minutes]
+$endif
+
+$title[$httpResult[tracks;0;title]]
+$embeddedURL[$httpResult[tracks;0;url]]
+$image[$replaceText[$httpResult[tracks;0;thumbnail];2048.jpg;maxresdefault.jpg]]
+$addField[Author;` $httpResult[tracks;0;author] `;yes]
+$addField[Duration;` $var[M] $var[S] `;yes]
+$addField[On Voice;<#$var[AuthorID]>;yes]
+$color[00fff4]
 $footer[Requested by $username#$discriminator[]]
 $footerIcon[$authorAvatar]
+
+$httpPost[$getVar[Music]/play/$guildID;{"track":"$httpResult[tracks;0;track]"}]
+
+$if[$httpResult[playing_now]==true]
+    $author[Playing Now!]
+$else
+     $author[Added to Queue!]
+$endif
