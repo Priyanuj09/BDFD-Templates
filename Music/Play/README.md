@@ -1,9 +1,10 @@
-# Important
+# Description
+A music play command which let's you play the requested songs  in your respective voice channel.
 
 ## Variables
 
 - ` Music ` - Your Lavalink
-- ` Track ` - 0
+
 
 ## Permission
 - ` Send Message `
@@ -11,11 +12,13 @@
 - ` Speak `
 
 ## Scripting Language
+- ` BDScript 2`
 - ` BDScript 2 `
-
-# Note
-- Experimental code...It works on some users only
-- Any Errors? Send the error message in my DMs and i will check it...
+- ` BDScript `
+- ` BDScript 2 `
+- ` BDScript 2 `
+- ` BDScript`
+- ` BDScript 2 `
 
 # Screenshots
 #1 - Playing Track
