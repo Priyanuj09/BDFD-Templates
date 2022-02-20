@@ -18,13 +18,8 @@ A music play command which let's you play the requested songs  in your respectiv
 # Screenshots
 - Play
 
-![Screenshot_20220220_153015](https://user-images.githubusercontent.com/95774950/154838177-99c8af23-525d-4d67-ad30-3a6563443ac6.png)
 
-![Screenshot_20220220_153330](https://user-images.githubusercontent.com/95774950/154838155-4cfff9aa-8d9d-42dd-9029-1a67d62ef1b1.png)
 
-- Queue
+![Screenshot_20220221_002028](https://user-images.githubusercontent.com/95774950/154859142-e073d9f5-9641-403b-9054-e388f444a1da.png)
 
-![Screenshot_20220220_155428](https://user-images.githubusercontent.com/95774950/154838279-9838db50-484a-42d5-850c-35a12ba3ae7a.png)
-
-![Screenshot_20220220_155520](https://user-images.githubusercontent.com/95774950/154838293-0428ab36-82a1-4120-a3dd-964e42fb6bac.png)
-
+![Screenshot_20220221_002113](https://user-images.githubusercontent.com/95774950/154859188-e32dbff2-e05b-45a8-bb35-4b081feb4624.png)
