@@ -4,7 +4,7 @@ There is any issue in BDFD that ` $httpResult[] ` isn't working with multiple re
 ![Screenshot_20220217_192839](https://user-images.githubusercontent.com/95774950/154497385-1f4bfb38-a782-46ca-b91a-55a5dd70065b.png)
 
 but the update isn't available on some nodes. So, my music commands will only work on bots if they are having one of these node numbers. As for them, they have the latest version
-- 2, 12, 21, 22
+- 2, 12, 21, 22, 29
 
 ## FAQs
 1. How do i check my Bot Node?
