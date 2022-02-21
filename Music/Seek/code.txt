@@ -1,10 +1,13 @@
 $nomention
 $ignoreTriggerCase
 $alternativeParsing
-$argsCheck[>1;Enter a timestamp to seek]
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
-
 $onlyIf[$guildID!=;]
+
+$if[$isSlash==false]
+$argsCheck[>1;Enter a timestamp to seek]
+$endif
+
+$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
 
 $httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
 $var[BotVC;$httpResult[voice_id]]
@@ -15,35 +18,46 @@ $onlyIf[$optOff[$httpResult[voice_id]]==$var[BotVC];You need to be in the same v
 $httpGet[$getUserVar[Music;$authorID]/track_info/$guildID]
 $onlyIf[$httpResult[isSeekable]==true;Cannot seek the current track]
 
-$textSplit[$toLowercase[$message]; ]
-$var[A;$toLowercase[$splitText[1]]]
-$var[B;$toLowercase[$splitText[2]]]
 $var[X;0] $var[Y;0]
 
-$onlyIf[$checkContains[$toLowercase[$message];s;m]==true;Supports seeking format (eg. ` 1m 50s `, ` 10m `, ` 42s `)]
-$if[$checkContains[$var[A];s]]
-    $var[N;$replaceText[$var[A];s;]]
-    $onlyIf[$isNumber[$var[N]]==true;Input a valid Second]
-    $var[X;$multi[$var[N];1000]]
+$if[$isSlash==true]
+$if[$message[1;minutes]!=]
+    $var[X;$multi[$message[1;minutes];60000]]
+$endif
+$if[$message[2;seconds]!=]
+    $var[Y;$multi[$message[2;seconds];1000]]
+$endif
+$else
+    $textSplit[$toLowercase[$message]; ]
+    
+    $var[A;$toLowercase[$splitText[1]]]
+    $var[B;$toLowercase[$splitText[2]]]
 
-$elseif[$checkContains[$var[B];s]]
-       $var[N;$replaceText[$var[B];s;]]
-       $onlyIf[$isNumber[$var[N]]==true;Input a valid Second]
-       $var[Y;$multi[$var[N];1000]]
-$endif
+    $onlyIf[$checkContains[$toLowercase[$message];s;m]==true;Supports seeking format (eg. ` 1m 50s `, ` 10m `, ` 42s `)]
+    $if[$checkContains[$var[A];s]]
+        $var[N;$replaceText[$var[A];s;]]
+        $onlyIf[$isNumber[$var[N]]==true;Input a valid Second]
+        $var[X;$multi[$var[N];1000]]
+
+    $elseif[$checkContains[$var[B];s]]
+            $var[N;$replaceText[$var[B];s;]]
+            $onlyIf[$isNumber[$var[N]]==true;Input a valid Second]
+            $var[Y;$multi[$var[N];1000]]
+    $endif
        
-$if[$checkContains[$var[A];m]]
-    $var[N;$replaceText[$var[A];m;]]
-    $onlyIf[$isNumber[$var[N]]==true;Input a valid Minute]
-    $var[X;$multi[$var[N];60000]]
-$endif
+    $if[$checkContains[$var[A];m]]
+        $var[N;$replaceText[$var[A];m;]]
+        $onlyIf[$isNumber[$var[N]]==true;Input a valid Minute]
+        $var[X;$multi[$var[N];60000]]
+    $endif
+    $endif
 
 $var[Seek;$sum[$var[X];$var[Y]]]
 $onlyIf[$httpResult[duration]>=$var[Seek];Error! Seeking duration is more than track duration]
 $httpPost[$getVar[Music]/seek/$guildID;{"seek":$var[Seek]}]
 
 $if[$optOff[$httpResult[type]]==SUCCESS]
-    $sendMessage[Successfully seeked!]
+    Successfully seeked!
 $else
-     $sendMessage[Fail to seek the track!]
+     Fail to seek the track!
 $endif
