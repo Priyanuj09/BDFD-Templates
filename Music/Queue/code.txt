@@ -1,18 +1,10 @@
 $nomention
 $ignoreTriggerCase
-$reply
-$allowUserMentions[]
 $onlyIf[$guildID!=;]
 $onlyIf[$message==;]
 $alternativeParsing
-$botTyping
-
-$c[Return error message if you don't have the variables]
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
 
 $async[a]
-$httpGet[$getVar[Music]/track_info/$guildID]
-$var[0;$httpResult[title]] $var[0a;$httpResult[url]]
 $httpGet[$getVar[Music]/track_info/$guildID?offset=2]
 $var[1;$optOff[$httpResult[title]]] $var[1a;$optOff[$httpResult[url]]]
 $httpGet[$getVar[Music]/track_info/$guildID?offset=3]
@@ -39,11 +31,13 @@ $httpGet[$getVar[Music]/track_info/$guildID?offset=10]
 $var[9;$optOff[$httpResult[title]]] $var[9a;$optOff[$httpResult[url]]]
 $httpGet[$getVar[Music]/track_info/$guildID?offset=11]
 $var[10;$optOff[$httpResult[title]]] $var[10a;$optOff[$httpResult[url]]]
+$httpGet[$getVar[Music]/track_info/$guildID?offset=12]
+$var[11;$optOff[$httpResult[title]]]
 $endasync $await[c]
 
 $onlyIf[$var[1]!=;No tracks added in the queue]
-$addField[Playing Now;[$var[0]\]($var[0a])]
-$addField[In Queue;$if[$var[1]!=]1. [$var[1]\]($var[1a]) $else Empty $endif
+$title[In Queue]
+$description[$if[$var[1]!=]1. [$var[1]\]($var[1a]) $else Empty $endif
 $if[$var[2]!=]2. [$var[2]\]($var[2a])$endif
 $if[$var[3]!=]3. [$var[3]\]($var[3a])$endif
 $if[$var[4]!=]4. [$var[4]\]($var[4a])$endif
@@ -53,7 +47,14 @@ $if[$var[7]!=]7. [$var[7]\]($var[7a])$endif
 $if[$var[8]!=]8. [$var[8]\]($var[8a])$endif
 $if[$var[9]!=]9. [$var[9]\]($var[9a])$endif
 $if[$var[10]!=]10. [$var[10]\]($var[10a])$endif]
-$color[a86df8]
-$footer[#$channelName[$channelID]]
-$addTimestamp
-$author[Queue]
+
+$if[$var[11]!=]
+    $addButton[no;previous.$authorID;Previous;secondary]
+    $addButton[no;next.$authorID;Next;secondary]
+    $setServerVar[Queue;0]
+$endif
+
+$color[2f3136]
+$footer[Page 1]
+$author[$username#$discriminator[]]
+$authorIcon[$authorAvatar]
