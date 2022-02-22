@@ -1,7 +1,9 @@
 # Description
-A command which let's us view our tracks full queue list.
+A music command which let's us view our tracks full queued list.
 
 # Important
+` $onInteraction ` command trigger should be without brackets.
+
 ## Variables
 - ` Music ` - Your Lavalink
 - ` Queue ` - 0
