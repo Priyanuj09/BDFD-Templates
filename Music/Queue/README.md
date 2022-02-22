@@ -15,8 +15,8 @@ A command which let's us view our tracks full queue list.
 # Screenshot
 - Queue
 
-[![Screenshot-20220214-222542.png](https://i.postimg.cc/tCMxrhvz/Screenshot-20220214-222542.png)](https://postimg.cc/QHcCCW3B)
+![IMG-20220222-WA0002](https://user-images.githubusercontent.com/95774950/155082579-d8e80e2e-51f4-4569-9cce-72db2dcbe914.jpg)
 
-- Error message when no tracks on queue
+- Error Message (When pressed Next in last queue page)
 
-[![Screenshot-20220214-222313.png](https://i.postimg.cc/L4vC8bh6/Screenshot-20220214-222313.png)](https://postimg.cc/t7ZtrDhL)
+![IMG-20220222-WA0003](https://user-images.githubusercontent.com/95774950/155082960-93c25621-3b59-4447-b3a8-faa848f9888c.jpg)
