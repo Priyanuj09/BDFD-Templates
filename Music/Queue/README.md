@@ -1,9 +1,16 @@
-# Important
-Variables needed
-- Music (Value - Your replit link)
+# Description
+A command which let's us view our tracks full queue list.
 
-# Info
-- Shows max 10 queue songs (for now)
+# Important
+## Variables
+- ` Music ` - Your Lavalink
+- ` Queue ` - 0
+
+## Permission
+- ` Send Message `
+
+## Script Language
+- ` BDScript 2 `
 
 # Screenshot
 - Queue
