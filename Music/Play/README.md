@@ -1,7 +1,7 @@
 # Description
 Plays your requested YouTube track in your respective voice channel.
 
-Usage : ` !play [YouTube Video Name/ Video or Playlist Link] `
+Usage : ` !play [YouTube Video Name/Link] `
 * [] - Required
 
 ## Variables
