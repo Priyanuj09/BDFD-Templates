@@ -1,69 +1,97 @@
+$varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
+
+$onlyIf[$guildID!=;You can't use this command in DM channels.]
+
+$if[$channelType[$channelID]==thread]
+    $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+$else
+     $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+$endif
+
+$onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+$onlyBotPerms[connect;Missing Permission : ` CONNECT `]
+$onlyBotPerms[speak;Missing Permission : ` SPEAK `]
+
+$argsCheck[>1;Type a song name/put a YouTube link to play!]
+
+$try
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$botID]
+    $var[BotVC;$httpResult[voice_id]]
+
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$authorID]
+    $var[AuthorVC;$optOff[$httpResult[voice_id]]]
+$catch
+      $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
+$endtry
+
+$onlyIf[$var[AuthorVC]!=;You aren't connected to any voice channels.]
+
+$if[$var[BotVC]!=]
+    $onlyIf[$var[AuthorVC]==$var[BotVC];You aren't connected in same voice channel.]
+$else
+     $httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorVC]"}]
+
+     $var[Type;$httpResult[type]]
+
+     $onlyIf[$var[Type]!=UNKNOWN_CHANNEL;Error! Cannot identify channel as a voice type.]
+     $onlyIf[$var[Type]!=NOT_JOINABLE;Error! Cannot hop into this voice channel.]
+     $onlyIf[$var[Type]!=MISSING_PERMISSIONS;Missing Permission : ` CONNECT `]
+$endif
+
+$if[$checkContains[$message;https://]]
+    $var[Query;$message]
+$else
+     $var[Query;$url[encode;$message]]
+$endif
+
+$httpGet[$getVar[bdfd-lavalink]/search?q=$var[Query]]
+
+$onlyIf[$httpResult[tracks;0;url]!=;Error! Cannot find the requested YouTube video.]
+
+$var[IsStream;$httpResult[tracks;0;isStream]]
+
+$if[$var[IsStream]]
+    $var[Length;Live]
+$else
+     $var[Duration;$round[$httpResult[tracks;0;duration]]]
+
+     $var[TH;$calculate[((($var[Duration]/1000)/60)/60)]]
+     $var[TS;$calculate[($var[Duration]/1000)-((($var[Duration]/1000)/60)*60)]]
+     $var[TM;$calculate[(($var[Duration]/1000)/60)-(((($var[Duration]/1000)/60)/60)*60)]]
+
+     $if[$var[TH]>0]
+         $var[H;$var[TH]h]
+     $endif
+
+     $if[$var[TM]>0]
+         $var[M;$var[TM]m]
+     $endif
+
+     $if[$var[TS]>0]
+         $var[S;$var[TS]s]
+     $endif
+
+     $var[Length;$var[H] $var[M] $var[S]]
+$endif
+
 $nomention
 
-$alternativeParsing
-$onlyIf[$guildID!=;]
-
-$onlyBotPerms[connect;:x: Missing `connect` permission]
-$onlyBotPerms[speak;:x: Missing `speak` permission]
-
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
-
-$var[AuthorID;$httpResult[voice_id]]
-
-$onlyIf[$var[AuthorID]!=;You are not connected to any voice channel]
-
-$httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorID]"}]
-
-$if[$checkContains[$message[1];https://]==true]
-    $if[$isSlash==false]
-        $argsCheck[>1;Type something to play]
-        $var[Search;$message]
-    $else
-         $var[Search;$message[OPTION_NAME]]
-    $endif
-$else
-     $if[$isSlash==false]
-         $argsCheck[>1;Type something to play]
-         $var[Search;$url[encode;$message]]
-     $else
-          $var[Search;$url[encode;$message[OPTION_NAME]]]
-     $endif
-$endif
-
-$httpGet[$getVar[Music]/search?q=$var[Search]]
-$textSplit[$httpResult[tracks;0;duration];.]
-$enableDecimals[no]
-    
-$var[Secs;$divide[$splitText[1];1000]]
-$var[Mins;$divide[$var[Secs];60]]
-$var[Sec;$calculate[$var[Secs]-($var[Mins]*60)]]
-    
-$if[$var[Sec]<10]
-    $var[S;$var[Sec] Second]
-$else
-     $var[S;$var[Sec] Seconds]
-$endif
-
-$if[$var[Mins]<10]
-    $var[M;$var[Mins] Minute]
-$else
-     $var[M;$var[Mins] Minutes]
-$endif
-
-$title[$httpResult[tracks;0;title]]
+$var[Embed;$title[$httpResult[tracks;0;title]]
 $embeddedURL[$httpResult[tracks;0;url]]
-$image[$replaceText[$httpResult[tracks;0;thumbnail];2048.jpg;maxresdefault.jpg]]
-$addField[Author;` $httpResult[tracks;0;author] `;yes]
-$addField[Duration;` $var[M] $var[S] `;yes]
-$addField[On Voice;<#$var[AuthorID]>;yes]
-$color[00fff4]
-$footer[Requested by $username#$discriminator[]]
-$footerIcon[$authorAvatar]
+$thumbnail[$replaceText[$httpResult[tracks;0;thumbnail];2048;maxresdefault]]
+$footer[Author : $httpResult[tracks;0;author]
+Duration : $var[Length]
+Requested by : $username#$discriminator[]]]
 
-$httpPost[$getVar[Music]/play/$guildID;{"track":"$httpResult[tracks;0;track]"}]
+$httpPost[$getVar[Music]/search_and_play/$guildID?q=$httpResult[tracks;0;url];{}]
 
-$if[$httpResult[playing_now]==true]
-    $author[Playing Now!]
-$else
-     $author[Added to Queue!]
-$endif
+$var[Type;$optOff[$httpResult[type]]]
+
+$onlyIf[$var[Type]!=UNKNOWN_GUILD;Error! Unknown Guild.]
+$onlyIf[$var[Type]!=UNKNOWN_MEMBER;Error! Unknown Member.]
+$onlyIf[$var[Type]!=NO_VOICE_CHANNEL;Error! Bot ain't connected to voice channel.]
+$onlyIf[$var[Type]!=FAILED;Error! Failed to play the requested track.]
+
+$author[$if[$httpResult[playing_now]]$if[$var[IsStream]]Streaming Now!$elsePlaying Now!$endif$elseAdded to Queue!$endif]
+$unescape[$var[Embed]]
+$color[$random[1;16777216]]
