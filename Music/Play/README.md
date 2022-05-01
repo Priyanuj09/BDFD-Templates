@@ -1,13 +1,17 @@
 # Description
-A music play command which let's you play the requested songs  in your respective voice channel.
+Plays your requested YouTube track in your respective voice channel.
 
-# Important
+Usage : ` !play [YouTube Video Name/ Video or Playlist Link] `
+* [] - Required
 
 ## Variables
-- ` Music ` - Your Lavalink
+Name - ` bdfd-lavalink `
+
+Value - ` Your Host URL `
 
 ## Permission
-- ` Send Message `
+- ` Send Message / Send Messages In Threads `
+- ` Embed Links `
 - ` Connect `
 - ` Speak `
 
@@ -15,10 +19,7 @@ A music play command which let's you play the requested songs  in your respectiv
 - ` BDScript 2 `
 
 # Screenshots
-- Play
 
-![Screenshot_20220221_002028](https://user-images.githubusercontent.com/95774950/154859142-e073d9f5-9641-403b-9054-e388f444a1da.png)
+![Screenshot_20220501_130202](https://user-images.githubusercontent.com/95774950/166137029-4694ccfd-b48a-4dde-af3b-80dc6945e805.png)
 
-- Queue
-
-![Screenshot_20220221_002113](https://user-images.githubusercontent.com/95774950/154859188-e32dbff2-e05b-45a8-bb35-4b081feb4624.png)
+![Screenshot_20220501_130016](https://user-images.githubusercontent.com/95774950/166137033-c4a44f20-eee1-4acf-b19d-87e068b78b8f.png)
