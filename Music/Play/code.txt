@@ -29,7 +29,7 @@ $onlyIf[$var[AuthorVC]!=;You aren't connected to any voice channels.]
 $if[$var[BotVC]!=]
     $onlyIf[$var[AuthorVC]==$var[BotVC];You aren't connected in same voice channel.]
 $else
-     $httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[AuthorVC]"}]
+     $httpPost[$getVar[bdfd-lavalink]/join_voice_channel;{"id":"$var[AuthorVC]"}]
 
      $var[Type;$httpResult[type]]
 
@@ -83,7 +83,7 @@ $footer[Author : $httpResult[tracks;0;author]
 Duration : $var[Length]
 Requested by : $username#$discriminator[]]]
 
-$httpPost[$getVar[Music]/search_and_play/$guildID?q=$httpResult[tracks;0;url];{}]
+$httpPost[$getVar[bdfd-lavalink]/search_and_play/$guildID?q=$httpResult[tracks;0;url];{}]
 
 $var[Type;$optOff[$httpResult[type]]]
 
