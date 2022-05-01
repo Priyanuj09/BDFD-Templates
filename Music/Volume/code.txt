@@ -1,30 +1,32 @@
+$varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
+
+$onlyIf[$guildID!=;You can't use this command in DM channels.]
+
+$if[$channelType[$channelID]==thread]
+    $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+$else
+     $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+$endif
+
+$onlyIf[$and[$isNumber[$message[1]]==true;$message[1]<201;$message[1]>=0]==true;Type a valid integer between 0-200.]
+
+$try
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$botID]
+    $var[BotVC;$httpResult[voice_id]]
+
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$authorID]
+    $var[AuthorVC;$optOff[$httpResult[voice_id]]]
+$catch
+      $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
+$endtry
+
+$onlyIf[$var[BotVC]!=;Currently, i am not connected to any voice channel.]
+$onlyIf[$var[AuthorVC]!=;You aren't connected to any voice channels.]
+$onlyIf[$var[BotVC]==$var[AuthorVC];You aren't connected to same voice channel.]
+
+$httpPost[$getVar[bdfd-lavalink]/volume/$guildID;{"volume":$message[1]}]
+
+$onlyIf[$httpResult[type]==SUCCESS;An error has occurred!]
+
 $nomention
-$ignoreTriggerCase
-$alternativeParsing
-
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink there.]
-
-$if[$isSlash==false]
-  $argsCheck[1;]
-    $var[A;$message]
-      $else
-        $var[A;$message[SLASH_OPTION_NAME]] $c[Check README.md for guide]
-          $endif
-
-$onlyIf[$guildID!=;]
-
-$onlyIf[$and[$isNumber[$var[A]]==true;$var[A]<201;$var[A]>=0]==true;Type a valid number between 0-200]
-
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
-$var[BotVC;$httpResult[voice_id]]
-$onlyIf[$var[BotVC]!=;Currently i am not in any voice channels]
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
-$onlyIf[$optOff[$httpResult[voice_id]]!=;You are not connected to any voice channel]
-$onlyIf[$optOff[$httpResult[voice_id]]==$var[BotVC];You need to be in the same voice channel]
-$httpPost[$getVar[Music]/volume/$guildID;{"volume":$var[A]}]
-
-$if[$httpResult[type]==SUCCESS]
-  Successfully changed the track volume!
-    $else
-      Failed to change volume!
-        $endif
+Successfully set the volume to $message[1]%.
