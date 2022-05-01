@@ -1,0 +1,30 @@
+$varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
+
+$onlyIf[$guildID!=;You can't use this command in DM channels.]
+
+$if[$channelType[$channelID]==thread]
+    $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+$else
+     $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+$endif
+
+$try
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$botID]
+    $var[BotVC;$httpResult[voice_id]]
+
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$authorID]
+    $var[AuthorVC;$optOff[$httpResult[voice_id]]]
+$catch
+      $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
+$endtry
+
+$onlyIf[$var[BotVC]!=;Currently, i am not connected to any voice channel.]
+$onlyIf[$var[AuthorVC]!=;You aren't connected to any voice channels.]
+$onlyIf[$var[BotVC]==$var[AuthorVC];You aren't connected to same voice channel.]
+
+$httpPost[$getVar[bdfd-lavalink;$authorID]/skip/$guildID;{}]
+
+$onlyIf[$httpResult[type]!=NOT_PLAYING;No tracks found! Your queue list is empty.]
+
+$nomention
+Successfully skipped!
