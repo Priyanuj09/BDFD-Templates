@@ -20,7 +20,7 @@ Before beginning, make sure you have an account & logged in Replit & Uptimerobot
 
 ![image4](https://i.imgur.com/vPv75Ey.png)
 
-5. Copy [this](API/index.js) and paste it in your ` index.js ` file.
+5. Copy [this](index.js) and paste it in your ` index.js ` file.
 
 ![image5](https://i.imgur.com/a6WGS9H.png)
 
