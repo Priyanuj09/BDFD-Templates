@@ -1,22 +1,35 @@
+$varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
+
+$onlyIf[$guildID!=;You can't use this command in DM channels.]
+
+$if[$channelType[$channelID]==thread]
+    $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+$else
+     $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+$endif
+
+$onlyBotPerms[connect;Missing Permission : ` CONNECT `]
+
+$try
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$botID]
+    $var[BotVC;$httpResult[voice_id]]
+
+    $httpGet[$getVar[bdfd-lavalink]/voice_channel_id/$guildID/$authorID]
+    $var[AuthorVC;$optOff[$httpResult[voice_id]]]
+$catch
+      $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
+$endtry
+
+$onlyIf[$var[AuthorVC]!=;You aren't connected to any voice channels.]
+$onlyIf[$var[AuthorVC]!=$var[BotVC];I am already connected into your voice channel.]
+
+$httpPost[$getVar[bdfd-lavalink]/join_voice_channel;{"id":"$var[AuthorVC]"}]
+
+$var[Type;$httpResult[type]]
+
+$onlyIf[$var[Type]!=UNKNOWN_CHANNEL;Error! Cannot identify channel as a voice type.]
+$onlyIf[$var[Type]!=NOT_JOINABLE;Error! Cannot hop into this voice channel.]
+$onlyIf[$var[Type]!=MISSING_PERMISSIONS;Missing Permission : ` CONNECT `]
+
 $nomention
-$ignoreTriggerCase
-$alternativeParsing
-
-$onlyIf[$guildID!=;]
-$onlyIf[$message==;]
-
-$onlyBotPerms[connect;:x: Missing `connect` permission]
-
-$varExistError[Music;You don't have a variable named ` Music `, Create the variable and put your lavalink replit link there. Check https://youtu.be/oe6TO4sZWcI for tutorial]
-
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$authorID]
-$var[A;$httpResult[voice_id]]
-$onlyIf[$var[A]!=;You are not connected to any voice channel]
-
-$httpGet[$getVar[Music]/voice_channel_id/$guildID/$botID]
-$onlyIf[$var[A]!=$optOff[$httpResult[voice_id]];Bruh...didn't you noticed me in VC?]
-
-$httpPost[$getVar[Music]/join_voice_channel;{"id":"$var[A]"}]
-$onlyIf[$httpResult[type]==SUCCESS;Failed to join into your voice channel]
-
-$sendMessage[_Hops into <#$var[A]>!_]
+Successfully hopped into your voice channel.
