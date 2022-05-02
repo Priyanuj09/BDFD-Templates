@@ -1,0 +1,95 @@
+$varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
+$varExistError[queue;Missing Variable : ` queue `]
+
+$onlyIf[$guildID!=;You can't use this command in DM channels.]
+
+$if[$channelType[$channelID]==thread]
+    $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+$else
+     $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+$endif
+
+$onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+
+$try
+    $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=1]
+$catch
+      $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
+$endtry
+
+$onlyIf[$httpResult[title]!=;Currently no tracks are being played.]
+
+$httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=2]
+$var[1;$optOff[$httpResult[title]]]
+$var[1a;$optOff[$httpResult[url]]]
+
+$onlyIf[$var[1]!=;No tracks queued so far.]
+
+$async[a]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=3]
+   $var[2;$optOff[$httpResult[title]]]
+   $var[2a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=4]
+   $var[3;$optOff[$httpResult[title]]]
+   $var[3a;$optOff[$httpResult[url]]]
+$endasync
+$await[a]
+
+$async[b]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=5]
+   $var[4;$optOff[$httpResult[title]]]
+   $var[4a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=6]
+   $var[5;$optOff[$httpResult[title]]]
+   $var[5a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=7]
+   $var[6;$optOff[$httpResult[title]]]
+   $var[6a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=8]
+   $var[7;$optOff[$httpResult[title]]]
+   $var[7a;$optOff[$httpResult[url]]]
+$endasync
+$await[b]
+
+$async[c]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=9]
+   $var[8;$optOff[$httpResult[title]]]
+   $var[8a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=10]
+   $var[9;$optOff[$httpResult[title]]]
+   $var[9a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=11]
+   $var[10;$optOff[$httpResult[title]]]
+   $var[10a;$optOff[$httpResult[url]]]
+
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=12]
+   $var[11;$optOff[$httpResult[title]]]
+$endasync
+$await[c]
+
+$nomention
+$author[Queue List]
+$description[$if[$var[1]!=]1. [$var[1]\]($var[1a]) $else Empty $endif
+$if[$var[2]!=]2. [$var[2]\]($var[2a])$endif
+$if[$var[3]!=]3. [$var[3]\]($var[3a])$endif
+$if[$var[4]!=]4. [$var[4]\]($var[4a])$endif
+$if[$var[5]!=]5. [$var[5]\]($var[5a])$endif
+$if[$var[6]!=]6. [$var[6]\]($var[6a])$endif
+$if[$var[7]!=]7. [$var[7]\]($var[7a])$endif
+$if[$var[8]!=]8. [$var[8]\]($var[8a])$endif
+$if[$var[9]!=]9. [$var[9]\]($var[9a])$endif
+$if[$var[10]!=]10. [$var[10]\]($var[10a])$endif]
+$color[$random[1;16777216]]
+$footer[Page 1]
+
+$if[$var[11]!=]
+    $addButton[no;previous.$authorID;Previous;secondary]
+    $addButton[no;next.$authorID;Next;secondary]
+    $setServerVar[queue;0]
+$endif
