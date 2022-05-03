@@ -1,5 +1,4 @@
 $varExistError[bdfd-lavalink;Missing Variable : ` bdfd-lavalink `]
-$varExistError[queue;Missing Variable : ` queue `]
 
 $onlyIf[$guildID!=;You can't use this command in DM channels.]
 
@@ -11,85 +10,87 @@ $endif
 
 $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
 
+$if[$or[$message[1]==;$message[1]==1]]
+    $var[N;0]
+$else
+     $onlyIf[$and[$isNumber[$message[1]]==true;$message[1]>1]==true;Provide a queue list number.]
+     $var[N;$sub[$message[1];1]]
+$endif
+
 $try
     $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=1]
+    $var[0;$httpResult[title]]
+    $var[0a;$httpResult[url]]
 $catch
       $onlyIf[1==2;Failed to get response from bdfd-lavalink API!]
 $endtry
 
-$onlyIf[$httpResult[title]!=;Currently no tracks are being played.]
+$onlyIf[$var[0]!=;Currently no tracks are being played.]
 
-$httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=2]
+$httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]2]
 $var[1;$optOff[$httpResult[title]]]
 $var[1a;$optOff[$httpResult[url]]]
 
-$onlyIf[$var[1]!=;No tracks queued so far.]
-
-$async[a]
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=3]
+$async[1]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]3]
    $var[2;$optOff[$httpResult[title]]]
    $var[2a;$optOff[$httpResult[url]]]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=4]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]4]
    $var[3;$optOff[$httpResult[title]]]
    $var[3a;$optOff[$httpResult[url]]]
-$endasync
-$await[a]
 
-$async[b]
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=5]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]5]
    $var[4;$optOff[$httpResult[title]]]
    $var[4a;$optOff[$httpResult[url]]]
+$endasync
+$await[1]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=6]
+$async[2]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]6]
    $var[5;$optOff[$httpResult[title]]]
    $var[5a;$optOff[$httpResult[url]]]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=7]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]7]
    $var[6;$optOff[$httpResult[title]]]
    $var[6a;$optOff[$httpResult[url]]]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=8]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]8]
    $var[7;$optOff[$httpResult[title]]]
    $var[7a;$optOff[$httpResult[url]]]
 $endasync
-$await[b]
+$await[2]
 
-$async[c]
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=9]
+$async[3]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$var[N]9]
    $var[8;$optOff[$httpResult[title]]]
    $var[8a;$optOff[$httpResult[url]]]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=10]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$sum[$var[N];1]0]
    $var[9;$optOff[$httpResult[title]]]
    $var[9a;$optOff[$httpResult[url]]]
 
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=11]
+   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=$sum[$var[N];1]1]
    $var[10;$optOff[$httpResult[title]]]
    $var[10a;$optOff[$httpResult[url]]]
-
-   $httpGet[$getVar[bdfd-lavalink]/track_info/$guildID?offset=12]
-   $var[11;$optOff[$httpResult[title]]]
 $endasync
-$await[c]
+$await[3]
 
 $nomention
 $author[Queue List]
-$description[$if[$var[1]!=]1. [$var[1]\]($var[1a]) $else Empty $endif
-$if[$var[2]!=]2. [$var[2]\]($var[2a])$endif
-$if[$var[3]!=]3. [$var[3]\]($var[3a])$endif
-$if[$var[4]!=]4. [$var[4]\]($var[4a])$endif
-$if[$var[5]!=]5. [$var[5]\]($var[5a])$endif
-$if[$var[6]!=]6. [$var[6]\]($var[6a])$endif
-$if[$var[7]!=]7. [$var[7]\]($var[7a])$endif
-$if[$var[8]!=]8. [$var[8]\]($var[8a])$endif
-$if[$var[9]!=]9. [$var[9]\]($var[9a])$endif
-$if[$var[10]!=]10. [$var[10]\]($var[10a])$endif]
-$color[$random[1;16777216]]
-$footer[Page 1]
+$description[**Currently Playing**
+$if[$var[0]!=][$var[0]\]($var[0a])$endif
 
-$if[$var[11]!=]
-    $addButton[no;previous.$authorID;Previous;secondary]
-    $addButton[no;next.$authorID;Next;secondary]
-    $setServerVar[queue;0]
-$endif
+**Queued**
+$if[$var[1]!=]$replaceText[$var[N]1.;0;] [$var[1]\]($var[1a]) $elseEmpty $endif
+$if[$var[2]!=]$replaceText[$var[N]2.;0;] [$var[2]\]($var[2a])$endif
+$if[$var[3]!=]$replaceText[$var[N]3.;0;] [$var[3]\]($var[3a])$endif
+$if[$var[4]!=]$replaceText[$var[N]4.;0;] [$var[4]\]($var[4a])$endif
+$if[$var[5]!=]$replaceText[$var[N]5.;0;] [$var[5]\]($var[5a])$endif
+$if[$var[6]!=]$replaceText[$var[N]6.;0;] [$var[6]\]($var[6a])$endif
+$if[$var[7]!=]$replaceText[$var[N]7.;0;] [$var[7]\]($var[7a])$endif
+$if[$var[8]!=]$replaceText[$var[N]8.;0;] [$var[8]\]($var[8a])$endif
+$if[$var[9]!=]$replaceText[$var[N]9.;0;] [$var[9]\]($var[9a])$endif
+$if[$var[10]!=]$sum[$var[N];1]0. [$var[10]\]($var[10a])$endif]
+$color[$random[1;16777216]]
+$footer[Page $sum[$var[N];1]]
