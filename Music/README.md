@@ -5,10 +5,10 @@ Worry not, there is an indirect method which can let you make a music bot in BDF
 
 In order to use the above commands, you need to have a running lavalink server API.
 
-Before we begin, make sure you already have an account and logged it in [Replit](https://replit.com) & [UptimeRobot](https://uptimerobot.com). If not, create one because we will be using those here for example (_You can choose whichever service you want_).
+Before we proceed how to setup lavalink server API, make sure you already have an account and logged it in [Replit](https://replit.com). If not, create one because we will be using that here for example (_You can choose whichever service you want_).
 
 # FAQs
-## How to have a Lavalink server API?
+## How do i setup Lavalink server API?
 
 1. Click [here](https://replit.com/new/nodejs) and you will be redirected to Replit create new Node.js project webpage.
 
@@ -35,6 +35,7 @@ server.init(process.env.token)
 
 6. Run the file and wait until the process is completed.
 
-7. Once completed, an url will be generated in the Web tab (_This is your host/lavalink server api url which you will using as value in ` bdfd-lavalink ` variable._).
+7. Once done, an url will be generated in the Web tab (_This is your host/lavalink server api url._). Finally, copy that and paste it in your ` bdfd-lavalink ` variable as value.
 
-I will complete it later, feeling boring to continue writing more...lol
+## I am still confused. Do you have any video tutorial?
+I will make one soon.
