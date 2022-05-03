@@ -1,24 +1,19 @@
 # Description
-A music command which let's us view our tracks full queued list.
+Shows your current playing & all queued tracks.
 
-# Important
-` $onInteraction ` command trigger should be without brackets.
+Usage : ` !queue {Page Number} `
+- { } - Optional
 
-## Variables
-- ` Music ` - Your Lavalink
-- ` Queue ` - 0
+# Variables
+Name - ` bdfd-lavalink `
 
-## Permission
-- ` Send Message `
+Value - ` Your Host URL `
 
-## Script Language
+# Permission
+- ` Send Message/Send Messages In Threads `
+- ` Embed Links `
+
+# Script Language
 - ` BDScript 2 `
 
 # Screenshot
-- Queue
-
-![IMG-20220222-WA0002](https://user-images.githubusercontent.com/95774950/155082579-d8e80e2e-51f4-4569-9cce-72db2dcbe914.jpg)
-
-- Error Message (When pressed Next in last queue page)
-
-![IMG-20220222-WA0003](https://user-images.githubusercontent.com/95774950/155082960-93c25621-3b59-4447-b3a8-faa848f9888c.jpg)
