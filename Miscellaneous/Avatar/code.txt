@@ -1,0 +1,40 @@
+$if[$isSlash]
+    $if[$message[user]==]
+         $var[User;$authorID]
+    $else
+         $var[User;$message[user]]
+    $endif
+$else
+     $if[$channelType[$channelID]==thread]
+         $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+     $else
+          $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+     $endif
+
+     $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+
+     $if[$message==]
+         $var[User;$authorID]
+     $else
+          $if[$userExists[$message]]
+              $var[User;$message]
+          $else
+               $allowMention
+               $onlyIf[$findUser[$message;no]!=;User doesn't exist in this server!]
+               $var[User;$findUser[$message;no]]
+          $endif
+     $endif
+$endif
+
+$if[$checkContains[$userAvatar[$var[User]];.gif]==false]
+    $var[Type;Normal]
+$else
+     $var[Type;Animated]
+$endif
+
+$nomention
+$author[Profile Picture]
+$embeddedURL[$userAvatar[$var[User]]?size=2048]
+$image[$userAvatar[$var[User]]?size=2048]
+$color[$random[1;16777216]]
+$footer[User : $username[$var[User]]#$discriminator[$var[User]] | Type : $var[Type]]
