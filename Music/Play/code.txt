@@ -49,25 +49,17 @@ $httpGet[$getVar[bdfd-lavalink]/search?q=$var[Query]]
 $onlyIf[$httpResult[tracks;0;url]!=;Error! Cannot find the requested YouTube video.]
 
 $var[IsStream;$httpResult[tracks;0;isStream]]
-
-$if[$var[IsStream]]
-    $var[Length;Live]
-$else
-       $var[Length;$httpResult[tracks;0;relative]]
-$endif
-
 $var[Embed;$title[$httpResult[tracks;0;title]]
 $embeddedURL[$httpResult[tracks;0;url]]
 $thumbnail[$replaceText[$httpResult[tracks;0;thumbnail];2048;maxresdefault]]
 $footer[Author : $httpResult[tracks;0;author]
-Duration : $var[Length]
+Duration : $replaceText[$replaceText[$checkCondition[$var[IsStream]==true];true;Live];false;$httpResult[tracks;0;relative]]
 Requested by : $username#$discriminator[]]]
 
 $httpPost[$getVar[bdfd-lavalink]/search_and_play/$guildID?q=$httpResult[tracks;0;url];{}]
 
 $var[Type;$optOff[$httpResult[type]]]
 
-$onlyIf[$var[Type]!=UNKNOWN_GUILD;Error! Unknown Guild.]
 $onlyIf[$var[Type]!=UNKNOWN_MEMBER;Error! Unknown Member.]
 $onlyIf[$var[Type]!=NO_VOICE_CHANNEL;Error! Bot ain't connected to voice channel.]
 $onlyIf[$var[Type]!=FAILED;Error! Failed to play the requested track.]
