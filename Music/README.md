@@ -8,7 +8,7 @@ In order to use the above commands, you need to have a running lavalink server A
 # FAQs
 ## How do i setup Lavalink server API?
 
-Before we proceed how to setup lavalink server API, make sure you already have an account and logged it in [Replit](https://replit.com). If not, create one because we will be using that here for example (_You can choose whichever service you want_).
+Before we proceed, make sure you already have an account and logged it in [Replit](https://replit.com). If not, create one because we will be using that here for example (_You can choose whichever service you want_).
 
 1. Click [here](https://replit.com/new/nodejs) and you will be redirected to Replit create new Node.js project webpage.
 
