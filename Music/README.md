@@ -38,4 +38,9 @@ server.init(process.env.token)
 7. Once done, an url will be generated in the Web tab (_This is your host/lavalink server api url._). Finally, copy that and paste it in your ` bdfd-lavalink ` variable as value.
 
 ## I am still confused. Do you have any video tutorial?
-I will make one soon.
+
+[![H](https://img.youtube.com/vi/zO28WkmaYss/maxresdefault.jpg)](https://youtu.be/zO28WkmaYss)
+
+Yes, click the image thumbnail & you will redirected to YouTube.
+
+(_Didn't uploaded the video through GitHub because GitHub doesn't allows to upload videos more than 10MB size & the video size is about 43MB._)
