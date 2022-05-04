@@ -53,28 +53,8 @@ $var[IsStream;$httpResult[tracks;0;isStream]]
 $if[$var[IsStream]]
     $var[Length;Live]
 $else
-     $var[Duration;$round[$httpResult[tracks;0;duration]]]
-
-     $var[TH;$calculate[((($var[Duration]/1000)/60)/60)]]
-     $var[TS;$calculate[($var[Duration]/1000)-((($var[Duration]/1000)/60)*60)]]
-     $var[TM;$calculate[(($var[Duration]/1000)/60)-(((($var[Duration]/1000)/60)/60)*60)]]
-
-     $if[$var[TH]>0]
-         $var[H;$var[TH]h]
-     $endif
-
-     $if[$var[TM]>0]
-         $var[M;$var[TM]m]
-     $endif
-
-     $if[$var[TS]>0]
-         $var[S;$var[TS]s]
-     $endif
-
-     $var[Length;$var[H] $var[M] $var[S]]
+       $var[Length;$httpResult[tracks;0;relative]]
 $endif
-
-$nomention
 
 $var[Embed;$title[$httpResult[tracks;0;title]]
 $embeddedURL[$httpResult[tracks;0;url]]
@@ -92,6 +72,7 @@ $onlyIf[$var[Type]!=UNKNOWN_MEMBER;Error! Unknown Member.]
 $onlyIf[$var[Type]!=NO_VOICE_CHANNEL;Error! Bot ain't connected to voice channel.]
 $onlyIf[$var[Type]!=FAILED;Error! Failed to play the requested track.]
 
+$nomention
 $author[$if[$httpResult[playing_now]]$if[$var[IsStream]]Streaming Now!$elsePlaying Now!$endif$elseAdded to Queue!$endif]
 $unescape[$var[Embed]]
 $color[$random[1;16777216]]
