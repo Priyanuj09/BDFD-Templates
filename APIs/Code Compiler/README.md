@@ -31,6 +31,10 @@ Supported Languages are :
 
 - Input - For codes which needs inputs.
 
+## API Info
+
+- Type - Free
+
 # Script Language
 
 - ` BDScript 2 `
@@ -38,3 +42,8 @@ Supported Languages are :
 # Screenshot
 
 ![Screenshot_20220505_174857](https://user-images.githubusercontent.com/95774950/166925611-dd55455b-cac1-4fc5-a0c2-357b18619f08.png)
+
+# Disclaimer
+
+The API used here in this code is neither owned nor affiliated by me. It's fully owned by [Jaagrav](https://github.com/Jaagrav).
+Make sure to check & star his [CodeX](https://github.com/Jaagrav/CodeX) repository.
