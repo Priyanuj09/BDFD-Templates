@@ -6,9 +6,7 @@ Usage :
 ![Screenshot_20220505_181155](https://user-images.githubusercontent.com/95774950/166925503-c2f93ae1-d128-4342-946e-6f70625d00c4.png)
 
 
-- [] - Required
-
-- {} - Optional
+- [] - Required, {} - Optional
 
 ## Arguments Info
 
