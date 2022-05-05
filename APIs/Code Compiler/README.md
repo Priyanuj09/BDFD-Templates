@@ -15,15 +15,15 @@ Usage :
 -  Language - The language which you want to compile.
 
 Supported Languages are :
-| Name | Value |
-| ----------- | ------|
-| C++ | cpp |
-| C | c |
-| C# | cs |
-| Python | py |
-| Kotlin | kt |
-| Ruby | rb |
-| Swift | swift |
+| Name   | Value |
+| ------ | ------|
+| C++    | cpp   |
+| C      | c     |
+| C#     | cs    |
+| Python | py    |
+| Kotlin | kt    |
+| Ruby   | rb    |
+| Swift  | swift |
 
 **Note** : You need to put the value in ` Language ` argument, not the name.
 
@@ -31,9 +31,6 @@ Supported Languages are :
 
 - Input - For codes which needs inputs.
 
-## API Info
-
-- Type - Free
 
 # Script Language
 
