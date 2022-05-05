@@ -1,0 +1,53 @@
+$if[$guildID!=]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+    $else
+         $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+    $endif
+
+    $onlyBotPerms[readmessagehistory;Missing Permission : ` READ_MESSAGE_HISTORY `]
+$endif
+
+$var[Msg;$getMessage[$channelID;$messageID;content]]
+
+$textSplit[$var[Msg];
+]
+
+$onlyIf[$toLowercase[$splitText[1]]==!compile;]
+$onlyIf[$splitText[2]!=;Provide a code to compile.]
+
+$onlyIfMessageContains[$splitText[2];```;Missing codeblock!]
+
+$var[Lang;$replaceText[$splitText[2];`;]]
+
+$onlyIf[$var[Lang]!=;You forgot to write the language name.]
+$onlyIf[$or[$var[Lang]==cpp;$var[Lang]==c;$var[Lang]==cs;$var[Lang]==java;$var[Lang]==py;$var[Lang]==rb;$var[Lang]==kt;$var[Lang]==swift]==true;Unsupported Language!]
+
+$var[CI;$replaceText[$var[Msg];$splitText[1]
+$splitText[2];;1]]
+
+$textSplit[$var[CI];
+]
+
+$onlyIf[$getTextSplitIndex[```]!=-1;Missing codeblock!]
+
+$textSplit[$var[CI];```]
+
+$var[Code;$replaceText[$splitText[1];";\"]]
+
+$if[$splitText[2]!=]
+    $removeSplitTextElement[1]
+    $var[Input;$replaceText[$joinSplitText[```];";\"]]
+$endif
+
+$try
+    $httpPost[https://codexweb.netlify.app/.netlify/functions/enforceCode;{"language":"$var[Lang]","code":"$var[Code]","input":"$var[Input]"}]
+$catch
+      $onlyIf[1==2;API Error! Might be currently down.]
+$endtry
+
+$nomention
+Compiled Output -
+```
+$replaceText[$httpResult[output];`;\`]
+```
