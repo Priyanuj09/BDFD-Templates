@@ -4,7 +4,7 @@ $if[$isSlash]
     $if[$message[user]==]
          $var[User;$authorID]
     $else
-         $var[User;$message[user]]
+         $var[User;$message[SLASH_OPTION_NAME]]
     $endif
 $else
      $ignoreTriggerCase
