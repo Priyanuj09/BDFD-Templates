@@ -1,40 +1,43 @@
+$nomention
+
 $if[$isSlash]
     $if[$message[user]==]
          $var[User;$authorID]
     $else
-         $var[User;$message[user]]
+         $var[User;$message[SLASH_OPTION_NAME]]
     $endif
 $else
-     $if[$channelType[$channelID]==thread]
-         $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
-     $else
-          $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
-     $endif
-
-     $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+     $ignoreTriggerCase
+     $alternativeParsing
 
      $if[$message==]
          $var[User;$authorID]
+     $elseif[$userExists[$message]]
+             $var[User;$message]
      $else
-          $if[$userExists[$message]]
-              $var[User;$message]
+          $allowMention
+
+          $if[$guildID!=]
+              $if[$channelType[$channelID]==thread]
+                  $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+              $else
+                   $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+              $endif
+
+              $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+
+              $var[User;$findUser[$message;no]]
+              $onlyIf[$var[User]!=;Couldn't find the user in this server!]
           $else
-               $allowMention
-               $onlyIf[$findUser[$message;no]!=;User doesn't exist in this server!]
-               $var[User;$findUser[$message;no]]
+               $var[User;$mentioned[1;no]]
+               $onlyIf[$var[User]!=;Couldn't find the user.]
           $endif
      $endif
 $endif
 
-$if[$checkContains[$userAvatar[$var[User]];.gif]==false]
-    $var[Type;Normal]
-$else
-     $var[Type;Animated]
-$endif
-
-$nomention
 $author[Profile Picture]
+$authorURL[https://discord.com/users/$var[User]]
 $embeddedURL[$userAvatar[$var[User]]?size=2048]
 $image[$userAvatar[$var[User]]?size=2048]
-$color[$random[1;16777216]]
-$footer[User : $username[$var[User]]#$discriminator[$var[User]] | Type : $var[Type]]
+$color[3bcb8a]
+$footer[User : $username[$var[User]]#$discriminator[$var[User]] | Type : $replaceText[$replaceText[$checkContains[$userAvatar[$var[User]];.gif];false;Normal];true;Animated]]
