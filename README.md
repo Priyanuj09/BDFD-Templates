@@ -3,13 +3,9 @@ Some Pre-Made BDFD Command Templates.
 
 You are free to use these codes in your BDFD bot or share them (_Just make sure that don't claim it as yours_).
 
-At the moment, all codes available here are made by [yuna#2982](https://discord.com/users/787706398489837590) (a.k.a Priyanuj)
+All codes available here are made by [yuna#2982](https://discord.com/users/787706398489837590) (a.k.a Priyanuj)
 
 # FAQs
-
-### Can i contribute my codes here? If yes, then how?
-
-Yes, you can. For this, you need to make a fork of this repository & do pull requests with your codes. Also, make sure your code is error-free & understandable.
 
 ### There is an error in the code. How can i report?
 
