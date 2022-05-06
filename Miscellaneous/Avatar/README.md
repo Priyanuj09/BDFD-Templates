@@ -25,7 +25,7 @@ Note : While writing the slash option name, make sure all are in lowercase forma
 
 Option Info
 
-- Name : ` _Your Choice_ `
+- Name : ` Your Choice `
 
 - Type : ` User `
 
