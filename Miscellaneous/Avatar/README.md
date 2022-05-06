@@ -10,11 +10,11 @@ Usage : ` !avatar {User} `
 
 - User - Below are the valid method inputs
 
-| | Mention | User ID | Username |
-|-- |----------| -------| ------|
-| Slash |✓ | × | × |
-| Guild | ✓ |✓ | ✓ |
-| DM | ✓ | ✓  | × |
+|       | Mention | User ID | Username |
+| ----- | ------- | ------- | -------- |
+| Slash |    ✓    |    ×    |    ×    |
+| Guild |    ✓    |    ✓    |    ✓    |
+| DM    |    ✓    |    ✓    |    ×    |
 
 ## Slash Command
 
