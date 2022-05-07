@@ -11,7 +11,7 @@ $else
              Missing ` MANAGE_ROLES ` permission.
      $else
           $if[$isSlash]
-              $var[User;$message[user]]
+              $var[User;$message[SLASH_OPTION_NAME]]
           $else
                $argsCheck[>1;Usage : ` !remove [UserID/Mention/Username\] `]
                $allowMention
