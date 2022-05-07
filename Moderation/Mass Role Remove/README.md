@@ -32,3 +32,8 @@ Option Info
 - ` BDScript 2 `
 
 # Preview
+
+
+https://user-images.githubusercontent.com/95774950/167270982-8a9140a5-e450-4858-89a8-370707c4b945.mp4
+
+
