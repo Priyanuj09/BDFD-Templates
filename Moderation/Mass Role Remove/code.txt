@@ -1,0 +1,50 @@
+$nomention
+
+$if[$guildID==]
+    You cannot use this command in DM.
+$else
+     $if[$and[$isSlash==false;$channelType[$channelID]==thread;$checkUserPerms[$botID;sendmessagesinthreads]==false]]
+         Missing ` SEND_MESSAGES_IN_THREADS ` permission.
+     $elseif[$and[$isSlash==false;$channelType[$channelID]!=thread;$checkUserPerms[$botID;sendmessages]==false]]
+             Missing ` SEND_MESSAGES ` permission.
+     $elseif[$and[$isSlash==false;$checkUserPerms[$botID;manageroles]==false]]
+             Missing ` MANAGE_ROLES ` permission.
+     $else
+          $if[$isSlash]
+              $var[User;$message[user]]
+          $else
+               $argsCheck[>1;Usage : ` !remove [UserID/Mention/Username\] `]
+               $allowMention
+               $var[User;$findUser[$message;no]]
+          $endif
+
+          $if[$var[User]==]
+              Couldn't find the user!
+          $else
+               $if[$or[$isAdmin[$authorID]==false;$checkUserPerms[$authorID;manageroles]==false;$authorID!=$serverOwner]]
+                   In order to perform, you need ` MANAGE_ROLES/ADMIN ` permission or must be owner of this server.
+               $elseif[$var[User]==$authorID]
+                       You cannot perform this operation on yourself.
+               $elseif[$isBot[$var[User]]]
+                       You cannot perform this operation on bots.
+               $elseif[$serverOwner==$var[User]]
+                       You cannot perform this operation on server owner.
+               $elseif[$isAdmin[$var[User]]]
+                       You cannot perform this operation on users having ` ADMIN ` permission.
+               $elseif[$rolePosition[$highestRole[$authorID]]>=$rolePosition[$highestRole[$var[User]]]]
+                       You cannot remove roles on users who have higher or equal role position than you.
+               $elseif[$rolePosition[$highestRole[$botID]]>=$rolePosition[$highestRole[$var[User]]]]
+                       I cannot remove roles on users who have higher or equal role position than me.
+               $else
+                    $if[$charCount[$userRoles[$var[User]]]==0]
+                        User doesn't have any roles.
+                    $else
+                         $textSplit[$userRoles[$var[User]];
+]
+                         $roleGrant[$var[User];$unescape[$eval[-%{DOL}%findRole[$replaceText[$replaceText[$joinSplitText[}\;-{];};\]];{;%{DOL}%findRole[]\]]]]
+                         ☑️ Removed all roles!
+                    $endif
+               $endif
+          $endif
+     $endif
+$endif
