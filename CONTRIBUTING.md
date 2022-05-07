@@ -3,7 +3,7 @@ We would love if you can contribute your codes here.
 
 ## FAQs
 
-### How i contribute?
+### How can i contribute?
 It's easy, just follow the 3 simple steps below -
 - Create a fork of this repository.
 - Make modifications to existing or add new codes.
