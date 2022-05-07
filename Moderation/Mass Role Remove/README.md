@@ -28,12 +28,12 @@ Option Info
 
 - Required : ` Yes `
 
+## Limitations
+- If you are having multiple clone roles, only one will be removed while the other won't. (If ` $userRoles[] ` returned IDs instead of names, this could have overcomed).
+
 # Script Language
 - ` BDScript 2 `
 
 # Preview
 
-
 https://user-images.githubusercontent.com/95774950/167270982-8a9140a5-e450-4858-89a8-370707c4b945.mp4
-
-
