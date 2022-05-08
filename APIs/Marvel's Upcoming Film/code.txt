@@ -1,0 +1,41 @@
+$nomention
+
+$if[$guildID!=]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+    $else
+         $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+    $endif
+
+    $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+$endif
+
+$httpGet[https://www.whenisthenextmcufilm.com/api]
+$var[Date;$httpResult[release_date]]
+$var[Date2;$httpResult[following_production;release_date]]
+
+$async[]
+ $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date]]
+ $var[Date;$httpResult[UnixTimeStamp]]
+
+ $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date2]]
+ $var[Date2;$optOff[$httpResult[UnixTimeStamp]]]
+$endasync
+$await[]
+
+$author[Upcoming Marvel Release]
+$thumbnail[$httpResult[poster_url]]
+$addField[$httpResult[title];$httpResult[overview]
+
+Type : $httpResult[type]
+Release date : <t:$var[Date]:D> ($round[$httpResult[days_until]] days left)]
+$color[6c75f9]
+
+$thumbnail[$httpResult[following_production;poster_url];2]
+$addField[$httpResult[following_production;title];$httpResult[following_production;overview]
+
+Type : $httpResult[following_production;type]
+Release date : <t:$var[Date2]:D> ($round[$httpResult[following_production;days_until]] days left);no;2]
+$color[6c75f9;2]
+
+$footer[Powered by whenisthenextmcufilm.com API;2]
