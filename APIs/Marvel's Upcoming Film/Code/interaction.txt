@@ -1,0 +1,52 @@
+$nomention
+
+$textSplit[$customID;.]
+
+$onlyIf[$splitText[1]==mcu;]
+
+$if[$splitText[2]!=$authorID]
+    $ephemeral
+    $removeButtons
+    You cannot interact other's command.
+$else
+     $author[Upcoming Marvel Release]
+     $color[6c75f9]
+     $footer[Powered by whenisthenextmcufilm.com API]
+
+     $if[$checkContains[$splitText[3];1;3;5]]
+         $if[$checkContains[$splitText[3];3;5]]
+             $var[Date;?date=$splitText[4]]
+         $endif
+
+         $httpGet[https://www.whenisthenextmcufilm.com/api$var[Date]]
+         $var[Date;$httpResult[release_date]]
+
+         $async[]
+           $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date]]
+           $var[UNIX;$httpResult[UnixTimeStamp]]
+         $endasync
+         $await[]
+
+         $thumbnail[$httpResult[poster_url]]
+         $addField[$httpResult[title];$httpResult[overview]
+
+Type : $httpResult[type]
+Release date : <t:$var[UNIX]:D> ($round[$httpResult[days_until]] days left)]
+
+     $elseif[$checkContains[$splitText[3];2;4]]
+             $httpGet[https://www.whenisthenextmcufilm.com/api?date=$splitText[4]]
+             $var[Date;$httpResult[following_production;release_date]]
+
+             $async[]
+                $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date]]
+                $var[UNIX;$httpResult[UnixTimeStamp]]
+             $endasync
+             $await[]
+
+             $thumbnail[$httpResult[following_production;poster_url]]
+             $addField[$httpResult[following_production;title];$httpResult[following_production;overview]
+
+Type : $httpResult[following_production;type]
+Release date : <t:$var[UNIX]:D> ($round[$httpResult[following_production;days_until]] days left)]
+     $endif
+$endif
