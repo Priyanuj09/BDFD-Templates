@@ -1,6 +1,6 @@
 $nomention
 
-$if[$guildID!=]
+$if[$and[$isSlash==false;$guildID!=]]
     $if[$channelType[$channelID]==thread]
         $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
     $else
@@ -10,17 +10,22 @@ $if[$guildID!=]
     $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
 $endif
 
-$httpGet[https://www.whenisthenextmcufilm.com/api]
+$try
+    $httpGet[https://www.whenisthenextmcufilm.com/api]
+$catch
+      $suppressErrors[]
+      $ephemeral
+      $onlyIf[1==2;Failed to get http response! API is having issues.]
+$endtry
+
 $var[Date;$httpResult[release_date]]
 $var[Date2;$httpResult[following_production;release_date]]
 
 $async[]
- $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date]]
- $var[Date;$httpResult[UnixTimeStamp]]
-
- $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date2]]
- $var[Date2;$optOff[$httpResult[UnixTimeStamp]]]
+   $httpGet[https://showcase.api.linx.twenty57.net/UnixTime/tounixtimestamp?datetime=$var[Date]]
+   $var[UNIX;$httpResult[UnixTimeStamp]]
 $endasync
+
 $await[]
 
 $author[Upcoming Marvel Release]
@@ -28,14 +33,14 @@ $thumbnail[$httpResult[poster_url]]
 $addField[$httpResult[title];$httpResult[overview]
 
 Type : $httpResult[type]
-Release date : <t:$var[Date]:D> ($round[$httpResult[days_until]] days left)]
+Release date : <t:$var[UNIX]:D> ($round[$httpResult[days_until]] days left)]
 $color[6c75f9]
+$footer[Powered by whenisthenextmcufilm.com API]
 
-$thumbnail[$httpResult[following_production;poster_url];2]
-$addField[$httpResult[following_production;title];$httpResult[following_production;overview]
+$httpGet[https://www.whenisthenextmcufilm.com/api?date=$var[Date2]]
 
-Type : $httpResult[following_production;type]
-Release date : <t:$var[Date2]:D> ($round[$httpResult[following_production;days_until]] days left);no;2]
-$color[6c75f9;2]
-
-$footer[Powered by whenisthenextmcufilm.com API;2]
+$addButton[no;mcu.$authorID.1;1;primary]
+$addButton[no;mcu.$authorID.2;2;primary]
+$addButton[no;mcu.$authorID.3.$var[Date2];3;primary]
+$addButton[no;mcu.$authorID.4.$var[Date2];4;primary]
+$addButton[no;mcu.$authorID.5.$optOff[$httpResult[following_production;release_date]];5;primary]
