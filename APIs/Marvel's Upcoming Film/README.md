@@ -19,7 +19,10 @@ Shows MCU's 5 upcoming movie/show's info.
 
 ## Preview
 
-![Screenshot_20220508_211247](https://user-images.githubusercontent.com/95774950/167315342-933311f9-ea7d-47d1-833c-d6625b994117.png)
+
+https://user-images.githubusercontent.com/95774950/167382403-43d7a69c-8a9e-41ca-a779-0b6479e177b1.mp4
+
+
 
 # API Info
  
