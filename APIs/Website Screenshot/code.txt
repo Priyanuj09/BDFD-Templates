@@ -1,0 +1,32 @@
+$nomention
+
+$if[$and[$isSlash==false;$guildID!=]]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+    $else
+         $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+    $endif
+
+    $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+    $argsCheck[>1;Provide a link]
+$endif
+
+$var[URL;$message[1;SLASH_OPTION_NAME]]
+
+$if[$removeLinks[$var[URL]]!=]
+    Invalid link!
+$else
+     $if[$checkContains[$toLowercase[$var[URL]];xvideos;pornhub;xhamster;xnxx;youporn;hclips;porntube;sexvid;pornhd;porn3000]]
+         $suppressErrors[]
+         $onlyNSFW[Provided url can only be viewed in NSFW channels.]
+     $endif
+
+     $var[API-Key;YOUR_API_KEY]
+     $var[User-Agent;Mozilla/5.0 (Linux\; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.61 Mobile Safari/537.36]
+
+     $title[screenshot.png]
+     $embeddedURL[$var[URL]]
+     $image[https://api.savepage.io/v1/?key=$var[API-Key]&nocookie=true&noads=true&format=png&refresh=30&accept_language=en-US&user_agent=$url[encode;$var[User-Agent]]&q=$url[encode;$var[URL]]]
+     $color[6c75f9]
+     $footer[Powered by Savepage.io API]
+$endif
