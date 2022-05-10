@@ -3,7 +3,7 @@ Some Pre-Made BDFD Command Templates.
 
 You are free to use these codes in your BDFD bot or share them (_Just make sure that don't claim it as yours_).
 
-All codes available here are made by [yuna#2982](https://discord.com/users/787706398489837590) (a.k.a Priyanuj)
+All codes available here are made by [Aeron#2758](https://discord.com/users/787706398489837590) (a.k.a Priyanuj)
 
 # FAQs
 
