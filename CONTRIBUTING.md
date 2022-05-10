@@ -1,5 +1,5 @@
 # Contributing
-We would love if you can contribute your codes here.
+We would love if you can contribute your codes here. Let's grow this repository together!!
 
 ## FAQs
 
