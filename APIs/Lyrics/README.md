@@ -31,3 +31,4 @@ GitHub
 - ` BDScript 2 `
 
 ## Preview
+![Screenshot_20220511_173430](https://user-images.githubusercontent.com/95774950/167851546-bd0b55e4-761d-4f3e-9774-1b2d1c6fc607.png)
