@@ -1,0 +1,54 @@
+$nomention
+
+$if[$and[$isSlash==false;$guildID!=]]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;Missing ` SEND_MESSAGES_IN_THREADS ` permission.]
+    $else
+         $onlyBotPerms[sendmessages;Missing ` SEND_MESSAGES ` permission.]
+    $endif
+
+    $onlyBotPerms[embedlinks;Missing ` EMBED_LINKS ` permission.]
+$endif
+
+$if[$isSlash]
+    $var[Search;$message[SLASH_OPTION_NAME]]
+$else
+     $argsCheck[>1;Provide a song name to get it's lyrics.]
+     $var[Search;$message]
+$endif
+
+$try
+    $httpGet[https://api-song-lyrics.herokuapp.com/search?q=$url[encode;$var[Search]]]
+$catch
+      $suppressErrors[]
+      $ephemeral
+      $onlyIf[1==2;API is having issues currently!]
+$endtry
+
+$if[$httpResult[status]]
+    $if[$httpResult[data;0]==]
+        $ephemeral
+        Couldn't find the lyrics!
+    $else
+         $try
+             $httpGet[$httpResult[data;0;songLyrics]]
+         $catch
+               $suppressErrors[]
+               $ephemeral
+               $onlyIf[1==2;API is having issues currently!]
+         $endtry
+
+         $if[$optOff[$and[$httpResult[status]==true;$httpResult[data]!=]]]
+             $author[$httpResult[data;songTitle]
+By $httpResult[data;artist]]
+             $description[$cropText[$httpResult[data;songLyrics];4000;]]
+             $color[6c75f9]
+             $footer[Powered by api-song-lyrics.herokuapp.com]
+         $else
+              Failed to retrieve lyrics from the API!
+         $endif
+    $endif
+$else
+     $ephemeral
+     API is currently having issues! Try sometime again later.
+$endif
