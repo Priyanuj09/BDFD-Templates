@@ -12,7 +12,7 @@
 - [Queue](https://github.com/Priyanuj09/BDFD-Templates/tree/main/Music/Queue)
 - [Volume](https://github.com/Priyanuj09/BDFD-Templates/tree/main/Music/Volume)
 - [Lyrics](https://github.com/Priyanuj09/BDFD-Templates/tree/main/Music/Lyrics)
-- [Join](https://github.com/Priyanuj09/BDFD-Templates/tree/main/Music/Join)
+- [Join](https://github.com/Priyanuj09/BDFD-Templates/tree/main/APIs/Music/Join)
 - [Seek](https://github.com/Priyanuj09/BDFD-Templates/tree/main/Music/Seek)
 
 ### January 2022
