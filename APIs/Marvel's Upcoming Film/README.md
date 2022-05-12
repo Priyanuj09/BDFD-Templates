@@ -15,19 +15,24 @@ In order to work this command properly, it requires the following permissions :
    - ` application.commands `
 
 ## API Info
+In this command, we used 2 APIs in order to achieve the final output :
 
-Website : https://www.whenisthenextmcufilm.com
-
-API Docs :  https://github.com/DiljotSG/MCU-Countdown/blob/develop/docs/API.md
-
-GitHub :
-
+- Marvel Upcoming Shows/Film API\
+\
+Website : https://www.whenisthenextmcufilm.com \
+\
+API Docs :  https://github.com/DiljotSG/MCU-Countdown/blob/develop/docs/API.md \
+\
+GitHub :\
+\
 [![MCU-Countdown](https://github-readme-stats.vercel.app/api/pin/?username=DiljotSG&repo=MCU-Countdown&theme=dark&hide_border=true)](https://github.com/DiljotSG/MCU-Countdown)
 
-## Language
+- Date to Unix Timestamp Converter\
+\
+Website : https://unixtime.co.za/
 
+## Language
 - ` BDScript 2 `
 
 ## Preview
-
 https://user-images.githubusercontent.com/95774950/167382403-43d7a69c-8a9e-41ca-a779-0b6479e177b1.mp4
