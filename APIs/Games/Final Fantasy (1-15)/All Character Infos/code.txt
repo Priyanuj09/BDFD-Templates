@@ -1,0 +1,44 @@
+$nomention
+
+$if[$and[$isSlash==false;$guildID!=]]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;Missing Permission : ` SEND_MESSAGES_IN_THREADS `]
+    $else
+         $onlyBotPerms[sendmessages;Missing Permission : ` SEND_MESSAGES `]
+    $endif
+
+    $onlyBotPerms[embedlinks;Missing Permission : ` EMBED_LINKS `]
+
+    $argsCheck[>1;Provide a Final Fantasy character name.]
+$endif
+
+$if[$isSlash]
+    $var[Character;$message[SLASH_OPTION_NAME]]
+$else
+     $var[Character;$message]
+$endif
+
+$try
+    $httpGet[https://www.moogleapi.com/api/v1/characters/search?name=$url[encode;$var[Character]]]
+$catch
+      $suppressErrors[]
+      $ephemeral
+      $onlyIf[1==2;Failed to receive http response! API is currently having issues.]
+$endtry
+
+$if[$httpResult[message]!=]
+    $ephemeral
+    Couldn't find the character!
+$else
+     $author[$httpResult[0;origin]]
+     $title[$httpResult[0;name]]
+     $thumbnail[$httpResult[0;pictures;0;url]]
+     $description[$httpResult[0;description]]
+     $addField[Info;Age : $httpResult[0;age]
+Gender : $httpResult[0;gender]
+Race : $httpResult[0;race]
+Job : $httpResult[0;job]
+Height : $httpResult[0;height] | Weight : $httpResult[0;weight]]
+     $footer[Powered by MoogleAPI.com]
+     $color[6c75f9]
+$endif
