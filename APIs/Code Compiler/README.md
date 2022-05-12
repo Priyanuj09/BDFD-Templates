@@ -8,13 +8,8 @@ Compile programming languages right through inside Discord.
 &#96;&#96;&#96;\
 {Input}
 
-- [] - Required, {} - Optional
-
-## Notes
-- I haven't made this command slash supportive.
-- Code might get buggy if ` \ ` is written before special characters since Discord uses ` \ ` as escaping tool. (_I will look later for solving ` \ ` escaping._)
-
 ## Arguments Info
+[] - Required, {} - Optional
 
 -  Language - The language which you want to compile.\
 Supported Languages are :
@@ -28,7 +23,12 @@ Supported Languages are :
 
 - Code - The code which needs to be compiled.
 
-- Input - Standard inputs 
+- Input - Code's standard inputs. (If any)
+
+## Notes
+- I haven't made this command slash supportive.
+- Code might get buggy if ` \ ` is written before special characters since Discord uses ` \ ` as escaping tool. (_I will look later for solving ` \ ` escaping._)
+- Generally preferred if your code takes standard inputs, write it in new lines instead  of using same line. (_Check [preview](#preview)'s first example._)
 
 ## Permissions
 This command requires the following permissions in order to work properly :
