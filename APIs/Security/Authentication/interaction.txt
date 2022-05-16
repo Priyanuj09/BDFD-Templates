@@ -1,34 +1,66 @@
 $nomention
-$ephemeral
-$suppressErrors[]
-$defer
 
-$httpAddHeader[X-API-Key;API_KEY_HERE]
-$httpAddHeader[Content-Type;application/json]
+$if[$customID==authHelp]
+    $ephemeral
+    $defer
+    $removeButtons
+Q1. How do i get verified?
+> • Click ` Verify ` to start your verification process.
+> • Provide your email address & open the link which you will receive in your mail address.
+> • After that, you will need to wait 1 minute 30 seconds to get verified.
+> • Once, the time has passed...You will receive a status message of your verification.
 
-$try
-    $httpPost[https://api.mojoauth.com/users/magiclink;{"email": "$input[email]"}]
-$catch
-      $onlyIf[1==2;Authentication API is currently having issues. Try again later!]
-$endtry
+Q2. Will my email get stored/revealed somewhere?
+> No, for privacy concerns...we won't be storing/revealing your personal information anywhere. We will only just use your email for verification.
 
-$onlyIf[$httpResult[code]!=900;$httpResult[description]]
-$onlyIf[$httpResult[code]!=1000;$httpResult[description]]
-$onlyIf[$and[$httpResult[code]!=905;$httpResult[code]!=904]==true;$httpResult[message]! Contact developer if this error comes.]
+Q3. I haven't received an email. What should i do?
+> • If you haven't received an email, double-check if you have written your email address correctly.
+> • Try checking the mail in Spam/Promotion section.
+$endif
 
-$var[ID;$httpResult[state_id]]
-$var[Expiry;2m]
+$if[$customID==authVerify]
+    $newModal[authModal;$username[$botID] Authentication]
+    $addTextInput[email;short;Provide an email address;6;320;yes;;example123@gmail.com]
+$endif
 
-A verification email has been sent into your provided email address. Kindly verify before this gets command expires after $var[Expiry].
+$if[$customID==authModal]
+    $ephemeral
+    $suppressErrors[]
+    $defer
 
-$async[]
-  $replyIn[$var[Expiry]]
-  $httpGet[https://api.mojoauth.com/users/status?state_id=$var[ID]]
-  $dm
+    $var[Time;<t:$sum[$getTimestamp;90]:T>]
 
-  $if[$httpResult[authenticated]]
-      $sendMessage[You have been successfully authenticated! :)]
-  $else
-       $sendMessage[Failed to authenticate. Reason : Timeout!]
-  $endif
-$endasync
+    $cooldown[90;You can use this command again after $var[Time]]
+
+    $httpAddHeader[X-API-Key;YOUR_API_KEY_HERE]
+    $httpAddHeader[Content-Type;application/json]
+
+    $try
+        $httpPost[https://api.mojoauth.com/users/magiclink;{"email": "$input[email]"}]
+    $catch
+          $onlyIf[1==2;Authentication API is currently having issues. Try again later!]
+    $endtry
+
+    $onlyIf[$httpResult[code]!=900;$httpResult[description]]
+    $onlyIf[$httpResult[code]!=1000;$httpResult[description]]
+    $onlyIf[$and[$httpResult[code]!=905;$httpResult[code]!=904]==true;$httpResult[message]! Contact developer if this error comes.]
+
+    $var[ID;$httpResult[state_id]]
+
+    A verification email has been sent into your provided email address. Open the link before $var[Time]
+
+    $async[]
+       $replyIn[90]
+       $httpGet[https://api.mojoauth.com/users/status?state_id=$var[ID]]
+
+       $if[$isUserDMEnabled[$authorID]]
+           $dm
+       $endif
+
+       $if[$httpResult[authenticated]]
+           $sendMessage[You have been successfully authenticated! :)]
+       $else
+            $sendMessage[Failed to authenticate. Reason : Timeout!]
+       $endif
+    $endasync
+$endif
