@@ -1,0 +1,7 @@
+$nomention
+$suppressErrors[]
+
+$cooldown[5m;You can use this command again after <t:$sum[$getTimestamp;300]:t>!]
+
+$newModal[auth;$username[$botID] Authentication]
+$addTextInput[email;short;Provide an email address;3;30;yes;;example123@gmail.com]
