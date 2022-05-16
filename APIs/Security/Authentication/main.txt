@@ -1,7 +1,21 @@
 $nomention
 $suppressErrors[]
 
-$cooldown[5m;You can use this command again after <t:$sum[$getTimestamp;300]:t>!]
+$if[$guildID!=]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotPerms[sendmessagesinthreads;`$username[$botID]#$discriminator[$botID] ` | Missing ` SEND_MESSAGES_IN_THREADS ` permission.]
+    $else
+         $onlyBotPerms[sendmessages;`$username[$botID]#$discriminator[$botID] ` | Missing ` SEND_MESSAGES ` permission.]
+    $endif
 
-$newModal[auth;$username[$botID] Authentication]
-$addTextInput[email;short;Provide an email address;3;30;yes;;example123@gmail.com]
+    $onlyBotPerms[embedlinks;`$username[$botID]#$discriminator[$botID] ` | Missing ` EMBED_LINKS ` permission.]
+$endif
+
+$author[$serverName[$guildID]]
+$thumbnail[$serverIcon]
+$description[YOUR CUSTOM TEXT HERE]
+$color[6c75f9]
+$footer[Powered by MojoAuth.com API]
+
+$addButton[no;authVerify;Verify;primary]
+$addButton[no;authHelp;Need Help?;secondary]
