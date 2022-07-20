@@ -1,0 +1,63 @@
+$nomention
+$onlyIfMessageContains[$customID;Button;]
+
+$textSplit[$getUserVar[Button];-]
+$var[Count;$splitText[<]]
+$var[ID;$splitText[2]]
+
+$textSplit[$customID;.]
+
+$if[$splitText[>]!=$authorID]
+    $ephemeral
+    $removeButtons
+    This interaction is not for you.
+$else
+     $if[$var[ID]!=$messageID]
+         $ephemeral
+         $removeButtons
+         You cannot interact with this game anymore.
+     $else
+          $var[Bomb;$splitText[3]]
+          $var[Style;$splitText[4]]
+          $var[bStyle;$splitText[5]]
+
+     $if[$optOff[$splitText[2]]==$var[Bomb]]
+         You lost.
+         $textSplit[$replaceText[$replaceText[$replaceText[$replaceText[$var[bStyle];p;Primary];d;Danger];s;Secondary];x;Success];,]
+
+         $optOff[$editButton[Button.1.$var[Bomb].$splitText[1].$var[bStyle].$authorID;1;$splitText[1];yes]
+         $editButton[Button.2.$var[Bomb].$splitText[2].$var[bStyle].$authorID;2;$splitText[2];yes]
+         $editButton[Button.3.$var[Bomb].$splitText[3].$var[bStyle].$authorID;3;$splitText[3];yes]
+         $editButton[Button.4.$var[Bomb].$splitText[4].$var[bStyle].$authorID;4;$splitText[4];yes]
+         $editButton[Button.5.$var[Bomb].$splitText[5].$var[bStyle].$authorID;5;$splitText[5];yes]
+         $editButton[Button.6.$var[Bomb].$splitText[6].$var[bStyle].$authorID;6;$splitText[6];yes]
+         $editButton[Button.7.$var[Bomb].$splitText[7].$var[bStyle].$authorID;7;$splitText[7];yes]
+         $editButton[Button.8.$var[Bomb].$splitText[8].$var[bStyle].$authorID;8;$splitText[8];yes]
+         $editButton[Button.9.$var[Bomb].$splitText[9].$var[bStyle].$authorID;9;$splitText[9];yes]
+         $editButton[Button.10.$var[Bomb].$splitText[10].$var[bStyle].$authorID;10;$splitText[10];yes]
+         $editButton[Button.11.$var[Bomb].$splitText[11].$var[bStyle].$authorID;11;$splitText[11];yes]
+         $editButton[Button.12.$var[Bomb].$splitText[12].$var[bStyle].$authorID;12;$splitText[12];yes]
+         $editButton[Button.13.$var[Bomb].$splitText[13].$var[bStyle].$authorID;13;$splitText[13];yes]
+         $editButton[Button.14.$var[Bomb].$splitText[14].$var[bStyle].$authorID;14;$splitText[14];yes]
+         $editButton[Button.15.$var[Bomb].$splitText[15].$var[bStyle].$authorID;15;$splitText[15];yes]
+         $editButton[Button.16.$var[Bomb].$splitText[16].$var[bStyle].$authorID;16;$splitText[16];yes]
+         $editButton[Button.17.$var[Bomb].$splitText[17].$var[bStyle].$authorID;17;$splitText[17];yes]
+         $editButton[Button.18.$var[Bomb].$splitText[18].$var[bStyle].$authorID;18;$splitText[18];yes]
+         $editButton[Button.19.$var[Bomb].$splitText[19].$var[bStyle].$authorID;19;$splitText[19];yes]
+         $editButton[Button.20.$var[Bomb].$splitText[20].$var[bStyle].$authorID;20;$splitText[20];yes]
+         $editButton[Button.21.$var[Bomb].$splitText[21].$var[bStyle].$authorID;21;$splitText[21];yes]
+         $editButton[Button.22.$var[Bomb].$splitText[22].$var[bStyle].$authorID;22;$splitText[22];yes]
+         $editButton[Button.23.$var[Bomb].$splitText[23].$var[bStyle].$authorID;23;$splitText[23];yes]
+         $editButton[Button.24.$var[Bomb].$splitText[24].$var[bStyle].$authorID;24;$splitText[24];yes]
+         $editButton[Button.25.$var[Bomb].$splitText[25].$var[bStyle].$authorID;25;$splitText[25];yes]]
+     $else
+          $if[$var[Count]!=24]
+              Continue...
+              $editButton[$customID;$splitText[2];$var[Style];yes]
+              $setUserVar[Button;$sum[$var[Count];1]-$var[ID]]
+          $else
+               You won!
+               $editButton[$customID;$splitText[2];$splitText[4];yes]
+               $textSplit[$replaceText[$replaceText[$replaceText[$replaceText[$var[bStyle];p;Primary];d;Danger];s;Secondary];x;Success];,]
+               $editButton[Button.$var[Bomb].$var[Bomb].$splitText[$var[Bomb]].$var[bStyle].$authorID;$var[Bomb];$splitText[$var[Bomb]];yes]
+$endif
