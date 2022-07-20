@@ -1,0 +1,75 @@
+$nomention
+
+$if[$guildID!=]
+    $if[$channelType[$channelID]==thread]
+        $onlyBotChannelPerms[$channelID;sendmessagesinthreads;]
+    $else
+        $onlyBotChannelPerms[$channelID;sendmessages;]
+    $endif
+$endif
+
+$varExistError[Button;You need to create ` Button ` variable with default value set to ` 1 ` in the app first.]
+
+$var[ID;$sendMessage[24 safe buttons, 1 bomb.;yes]]
+
+$var[Bomb;$random[1;21]]
+
+$var[Style-1;$randomText[Primary;Secondary;Success;Danger]]
+$var[Style-2;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-3;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-4;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-5;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-6;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-7;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-8;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-9;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-10;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-11;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-12;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-13;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-14;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-15;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-16;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-17;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-18;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-19;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-20;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-21;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-22;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-23;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-24;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+$var[Style-25;$optOff[$randomText[Primary;Secondary;Success;Danger]]]
+
+$var[Style-Data;$replaceText[$replaceText[$replaceText[$replaceText[$var[Style-1],$var[Style-2],$var[Style-3],$var[Style-4],$var[Style-5],$var[Style-6],$var[Style-7],$var[Style-8],$var[Style-9],$var[Style-10],$var[Style-11],$var[Style-12],$var[Style-13],$var[Style-14],$var[Style-15],$var[Style-16],$var[Style-17],$var[Style-18],$var[Style-19],$var[Style-20],$var[Style-21],$var[Style-22],$var[Style-23],$var[Style-24],$var[Style-25];Primary;p];Secondary;s];Success;x];Danger;d]]
+
+$addButton[no;Button.1.$var[Bomb].$var[Style-1].$var[Style-Data].$authorID;1;$var[Style-1];;;$var[ID]]
+$addButton[no;Button.2.$var[Bomb].$var[Style-2].$var[Style-Data].$authorID;2;$var[Style-2];;;$var[ID]]
+$addButton[no;Button.3.$var[Bomb].$var[Style-3].$var[Style-Data].$authorID;3;$var[Style-3];;;$var[ID]]
+$addButton[no;Button.4.$var[Bomb].$var[Style-4].$var[Style-Data].$authorID;4;$var[Style-4];;;$var[ID]]
+$addButton[no;Button.5.$var[Bomb].$var[Style-5].$var[Style-Data].$authorID;5;$var[Style-5];;;$var[ID]]
+
+$addButton[yes;Button.6.$var[Bomb].$var[Style-6].$var[Style-Data].$authorID;6;$var[Style-6];;;$var[ID]]
+$addButton[no;Button.7.$var[Bomb].$var[Style-7].$var[Style-Data].$authorID;7;$var[Style-7];;;$var[ID]]
+$addButton[no;Button.8.$var[Bomb].$var[Style-8].$var[Style-Data].$authorID;8;$var[Style-8];;;$var[ID]]
+$addButton[no;Button.9.$var[Bomb].$var[Style-9].$var[Style-Data].$authorID;9;$var[Style-9];;;$var[ID]]
+$addButton[no;Button.10.$var[Bomb].$var[Style-10].$var[Style-Data].$authorID;10;$var[Style-10];;;$var[ID]]
+
+$addButton[yes;Button.11.$var[Bomb].$var[Style-11].$var[Style-Data].$authorID;11;$var[Style-11];;;$var[ID]]
+$addButton[no;Button.12.$var[Bomb].$var[Style-12].$var[Style-Data].$authorID;12;$var[Style-12];;;$var[ID]]
+$addButton[no;Button.13.$var[Bomb].$var[Style-13].$var[Style-Data].$authorID;13;$var[Style-13];;;$var[ID]]
+$addButton[no;Button.14.$var[Bomb].$var[Style-14].$var[Style-Data].$authorID;14;$var[Style-14];;;$var[ID]]
+$addButton[no;Button.15.$var[Bomb].$var[Style-15].$var[Style-Data].$authorID;15;$var[Style-15];;;$var[ID]]
+
+$addButton[yes;Button.16.$var[Bomb].$var[Style-16].$var[Style-Data].$authorID;16;$var[Style-16];;;$var[ID]]
+$addButton[no;Button.17.$var[Bomb].$var[Style-17].$var[Style-Data].$authorID;17;$var[Style-17];;;$var[ID]]
+$addButton[no;Button.18.$var[Bomb].$var[Style-18].$var[Style-Data].$authorID;18;$var[Style-18];;;$var[ID]]
+$addButton[no;Button.19.$var[Bomb].$var[Style-19].$var[Style-Data].$authorID;19;$var[Style-19];;;$var[ID]]
+$addButton[no;Button.20.$var[Bomb].$var[Style-20].$var[Style-Data].$authorID;20;$var[Style-20];;;$var[ID]]
+
+$addButton[yes;Button.21.$var[Bomb].$var[Style-21].$var[Style-Data].$authorID;21;$var[Style-21];;;$var[ID]]
+$addButton[no;Button.22.$var[Bomb].$var[Style-22].$var[Style-Data].$authorID;22;$var[Style-22];;;$var[ID]]
+$addButton[no;Button.23.$var[Bomb].$var[Style-23].$var[Style-Data].$authorID;23;$var[Style-23];;;$var[ID]]
+$addButton[no;Button.24.$var[Bomb].$var[Style-24].$var[Style-Data].$authorID;24;$var[Style-24];;;$var[ID]]
+$addButton[no;Button.25.$var[Bomb].$var[Style-25].$var[Style-Data].$authorID;25;$var[Style-25];;;$var[ID]]
+
+$setUserVar[Button;1-$var[ID]]
