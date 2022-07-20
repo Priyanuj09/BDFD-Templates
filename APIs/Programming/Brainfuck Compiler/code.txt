@@ -1,0 +1,28 @@
+$nomention
+$defer
+$suppressErrors[Internal Error: ` Failed to execute the command! `]
+
+$httpAddHeader[Content-Type;application/json]
+$httpAddHeader[Accept;application/json]
+
+$globalCooldown[10s;You can use this command again after <t:$sum[$getTimestamp;$getCooldown[global]]:T>]
+
+$httpPost[https://brainfuck-api.vercel.app/api/execute;{"code":"$replaceText[$replaceText[$message[code];
+;];";\"]","input":"$replaceText[$replaceText[$message[input];
+;];";\"]"}]
+
+$onlyIf[$httpResult[error;code]!=504;Internal error: ` $httpResult[error;message] `]
+$onlyIf[$httpResult[error]==;‼️ ` $toTitleCase[$httpResult[error]] `]
+
+$color[16F561]
+$title[🗒️ Code]
+$description[```
+$cropText[$message[code];4090;]```]
+
+$if[$message[input]!=]
+    $addField[📥 Input;$message[input]]
+$endif
+
+$addField[📤 Output (Text);```
+$cropText[$httpResult[str];1010;...] ```]
+$addField[📤 Output (ASCII Value);`$cropText[$replaceText[$replaceText[$httpResult[arr];[;];\];];1010;]`]
